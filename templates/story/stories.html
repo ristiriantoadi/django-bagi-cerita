@@ -17,25 +17,25 @@
             <div class="card" style="width: 100%">
                 <div class="card-header">
                     <div class="row">
-                       <div class="col">
+                       <div class="col-lg-6 mb-4">
                             <ul class="nav nav-tabs card-header-tabs">
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="true" href="#">Stories</a>
+                                    <a class="nav-link {% if page == 'stories' %} active {% endif %}" aria-current="true" href="/stories">Stories</a>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link" href="#">Popular</a>
+                                    <a class="nav-link {% if page == 'popular' %} active {% endif %} " href="/stories/popular">Popular</a>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link" href="#">Best</a>
+                                    <a class="nav-link {% if page == 'best' %} active {% endif %}" href="/stories/best">Best</a>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link" href="#">Featured</a>
+                                    <a class="nav-link {% if page == 'featured' %} active {% endif %}" href="/stories/featured">Featured</a>
                                 </li>
                             </ul>
                        </div>
-                       <div class="col">
+                       <div class="col-lg-6">
                             <form class="form-inline">
-                                <input style="width:70%;display: inline-block" class="form-control mr-2" type="search" placeholder="Cari berdasarkan judul" aria-label="Search">
+                                <input class="searchbar form-control mr-2" type="search" placeholder="Cari berdasarkan judul" aria-label="Search">
                                 <button class="btn btn-outline-primary" type="submit">Pencarian</button>
                             </form>
                        </div> 
@@ -44,7 +44,18 @@
                 <div class="card-body">
                     <h3 class="card-title">All Stories</h3>
                     <div class="story-box mb-3">
-                        <div class="container-fluid">
+                        <div class="score-box mr-2">
+                            <div class="points-number text-center mb-0">18</div>
+                            <div class="points-text text-center">Points</div>
+                        </div>
+                        <div class="info">
+                            <h5 class="mb-0"><a href="google.com">Halo-halo Bandung</a></h5>
+                            <span class="text font-weight-light">(3200 kata) by <a href="youtube.com">Andika</a> on 2020-03-06</span>
+                            <span class="text tags font-weight-light">Tags: <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
+                                | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a> 
+                                | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
+                        </div>
+                        <!-- <div class="container-fluid">
                             <div class="row">
                                 <div class="score-box mr-2">
                                     <div class="points-number text-center mb-0">18</div>
@@ -53,10 +64,12 @@
                                 <div class="info">
                                     <h5 class="mb-0"><a href="google.com">Halo-halo Bandung</a></h5>
                                     <span class="text font-weight-light">(3200 kata) by <a href="youtube.com">Andika</a> on 2020-03-06</span>
-                                    <span class="text font-weight-light">Tags: <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a> 
+                                    <span class="text tags font-weight-light">Tags: <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
+                                        | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a> 
+                                        | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
