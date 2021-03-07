@@ -1,0 +1,27 @@
+/* h3{
+    color: blue;
+} */
+
+.score-box{
+    /* background-color: #0b6623; */
+    background-color: #005CBF;
+    padding: 10px 20px;
+    color: white;
+}
+
+.points-number{
+    font-size: 35px;
+}
+
+.points-text{
+    font-size: 10px;
+}
+
+.story-box .info {
+    width: 90%;
+}
+
+.story-box .info .text{
+    display: block;
+    font-size: 0.9em;
+}
