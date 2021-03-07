@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from story.views import home_view
+from user.views import login_view, register_view
+
 urlpatterns = [
     path('',home_view,name="home"), # this one will just redirect to stories/ url
     path('admin/', admin.site.urls),
