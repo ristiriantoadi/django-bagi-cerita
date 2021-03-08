@@ -56,7 +56,7 @@
     font-size: 0.9em;
 }
 
-.comment .form-skor{
+.comments .form-skor{
     display: flex;
     align-items: center;
 }
@@ -67,4 +67,12 @@
 
 .comment-box .container-button-submit{
     text-align: right;
+}
+
+.reply-box{
+    display: none;
+}
+
+.reply-box.visible{
+    display: block;
 }

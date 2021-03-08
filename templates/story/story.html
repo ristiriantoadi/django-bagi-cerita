@@ -65,6 +65,15 @@
                                     <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
                                     <div class="login-to-comment">
                                         <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
+                                        <button onclick="showReplyBox(this)" type="button" data-target="reply-box-1" class="btn btn-link">Reply</button>
+                                        <form class="reply-box" id="reply-box-1">
+                                            <div class="form-group no-gutters">
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            </div>
+                                            <div class="container-button-submit">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>                
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -77,45 +86,17 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="comment-list">
-                            <div class="comment mb-2">
-                                <h6 class="user font-weight-bold">Jihan</h6>
-                                <span class="date font-weight-light">(26-08-2020)</span>
-                                <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
-                                <div class="login-to-comment">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
-                                </div>
-                                <div class="ml-5 comment mb-2">
-                                    <h6 class="user font-weight-bold">Jihan</h6>
-                                    <span class="date font-weight-light">(26-08-2020)</span>
-                                    <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
-                                    <div class="login-to-comment">
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
-                                    </div>
-                                    <div class="ml-5 comment mb-2">
-                                        <h6 class="user font-weight-bold">Jihan</h6>
-                                        <span class="date font-weight-light">(26-08-2020)</span>
-                                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
-                                        <div class="login-to-comment">
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ml-5 comment mb-2">
-                                    <h6 class="user font-weight-bold">Jihan</h6>
-                                    <span class="date font-weight-light">(26-08-2020)</span>
-                                    <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
-                                    <div class="login-to-comment">
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function showReplyBox(item) {
+            var replyBoxId = item.getAttribute("data-target");
+            document.getElementById(replyBoxId).classList.toggle("visible");
+        }
+    </script>
 {% endblock %}
 
 {% block title %}
