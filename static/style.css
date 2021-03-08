@@ -39,7 +39,7 @@
     width: 70% !important;
 }
 
-.comment-list{
+.comments{
     width: 90%;
 }
 
@@ -54,4 +54,17 @@
 
 .comment .date{
     font-size: 0.9em;
+}
+
+.comment .form-skor{
+    display: flex;
+    align-items: center;
+}
+
+.form-skor .item {
+    margin-bottom: 0;
+}
+
+.comment-box .container-button-submit{
+    text-align: right;
 }

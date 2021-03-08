@@ -1,8 +1,6 @@
 {% extends 'base.html' %} 
 {% block content %}
     {% include 'navbar.html' %}
-    <!-- <h1>This is individual story page</h1>
-    <p>Id: {{id}}</p> -->
     <div class="container">
         <div class="row mt-5">
             <div class="card" style="width: 100%">
@@ -22,9 +20,64 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet qui eius voluptatem similique voluptatum dolores minus praesentium molestias esse soluta sunt reprehenderit saepe, eveniet assumenda porro harum! Dolor unde laudantium obcaecati, esse ex quidem est veritatis voluptatibus accusamus quia magnam quod minus repellat, mollitia tempore? Consequuntur praesentium beatae, quae nostrum ab eaque quam neque vitae ipsum delectus nisi illum dignissimos repudiandae fuga maxime rem maiores! Aut pariatur placeat iure ab. Atque quam voluptate ratione perferendis, possimus asperiores vero. Nesciunt fugiat iste eveniet nulla. Inventore vel optio nihil eos, vitae hic, quibusdam tenetur qui impedit voluptates sint fugit rerum unde? Eos ducimus est tenetur dicta. Harum quisquam iure porro, consequatur qui cum tempora vel earum eius ratione sed vero nisi beatae dignissimos adipisci rerum quam error facere quaerat temporibus necessitatibus. Itaque praesentium iure quia iste delectus aut doloremque. Veniam esse explicabo quis modi id. Veniam, nostrum et dolore laborum consectetur illum. Illo minus minima ducimus, unde pariatur quasi perferendis praesentium nemo, accusamus, quis neque? Voluptate id, officiis adipisci provident a cumque beatae sunt voluptatem quis, error et, rem eos sint expedita quam accusantium eaque consectetur aliquam exercitationem maiores distinctio ea vitae? Enim ad architecto unde hic possimus maxime eveniet itaque voluptatum?</p>
                         </div>
                     </div>
-                    <div class="comment">
+                    <div class="comments">
                         <h4 class="card-title">Komentar</h4>
-                        <div class="comment-list">
+                        <form class="comment-box">
+                            <div class="form-skor form-group no-gutters">
+                                <label class="item mr-1" for="exampleFormControlSelect1">Skor</label>
+                                <select class="item col-sm-1 form-control  form-control-sm" id="exampleFormControlSelect1">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                  <option>6</option>
+                                  <option>7</option>
+                                  <option>8</option>
+                                  <option>9</option>
+                                  <option>10</option>
+                                </select>
+                            </div>
+                            <div class="form-group no-gutters">
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                            <div class="container-button-submit">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                        <div class="comment mb-2">
+                            <h6 class="user font-weight-bold">Jihan</h6>
+                            <span class="date font-weight-light">(26-08-2020)</span>
+                            <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
+                            <div class="login-to-comment">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
+                            </div>
+                            <div class="ml-5 comment mb-2">
+                                <h6 class="user font-weight-bold">Jihan</h6>
+                                <span class="date font-weight-light">(26-08-2020)</span>
+                                <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
+                                <div class="login-to-comment">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
+                                </div>
+                                <div class="ml-5 comment mb-2">
+                                    <h6 class="user font-weight-bold">Jihan</h6>
+                                    <span class="date font-weight-light">(26-08-2020)</span>
+                                    <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
+                                    <div class="login-to-comment">
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ml-5 comment mb-2">
+                                <h6 class="user font-weight-bold">Jihan</h6>
+                                <span class="date font-weight-light">(26-08-2020)</span>
+                                <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
+                                <div class="login-to-comment">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="comment-list">
                             <div class="comment mb-2">
                                 <h6 class="user font-weight-bold">Jihan</h6>
                                 <span class="date font-weight-light">(26-08-2020)</span>
@@ -57,7 +110,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
