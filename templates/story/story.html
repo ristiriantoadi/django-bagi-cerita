@@ -1,4 +1,5 @@
 {% extends 'base.html' %} 
+{% load story_tags %}
 {% block content %}
     {% include 'navbar.html' %}
     <div class="container">
@@ -48,6 +49,11 @@
                         <div class="comment mb-2">
                             <h6 class="user font-weight-bold">Jihan</h6>
                             <span class="date font-weight-light">(26-08-2020)</span>
+                            <span class="rating">
+                                {% if rating %}
+                                    {{ rating | render_rating }}
+                                {% endif %}
+                            </span>
                             <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
                             <div class="login-to-comment">
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>

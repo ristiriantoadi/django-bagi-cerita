@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os,logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,6 +25,20 @@ SECRET_KEY = '==8xtqgs&wxx@@nwhba-k+ig@-fc%%72!+fh7zed2uzpgz^78i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# if DEBUG:
+#     # will output to your console
+#     logging.basicConfig(
+#         level = logging.DEBUG,
+#         format = '%(asctime)s %(levelname)s %(message)s',
+#     )
+# else:
+#     # will output to logging file
+#     logging.basicConfig(
+#         level = logging.DEBUG,
+#         format = '%(asctime)s %(levelname)s %(message)s',
+#         filename = '/my_log_file.log',
+#         filemode = 'a'
+#     )
 
 ALLOWED_HOSTS = []
 
