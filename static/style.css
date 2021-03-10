@@ -76,3 +76,6 @@
 .reply-box.visible{
     display: block;
 }
+.checked {
+    color: orange;
+}

@@ -25,6 +25,7 @@ def featured_stories_view(request):
     return render(request,"story/stories.html",context)
 def story_view(request,story_id):
     context={
-        "id":story_id
+        "id":story_id,
+        "rating":10
     }
     return render(request,"story/story.html",context)
