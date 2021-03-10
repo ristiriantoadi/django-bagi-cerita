@@ -1,9 +1,73 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <h1>This is user profile page</h1>
-    <p>User id: {{id}}</p>
+    {% include 'navbar.html' %}
+    <div class="container mt-5">
+        <h2>Andika</h2>
+        <div class="row">
+            <div class="card" style="width: 100%">
+                <div class="card-header">
+                    <div class="row">
+                       <div class="col-lg-6 mb-4">
+                            <ul class="nav nav-tabs card-header-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link {% if page == 'profil' %} active {% endif %}" aria-current="true" href="/user/123/profil">Profil</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if page == 'notifikasi' %} active {% endif %} " href="/user/123/notifikasi">Notifikasi</a>
+                                </li>
+                            </ul>
+                       </div> 
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Profil</h3>
+                    <div class="profile">
+                        <div {% if img %} style="background-image: url('http://localhost:8000/static/{{ img }}')" {% endif %} class="profile-img"></div>
+                        <div class="profile-info ml-5">
+                            <div class="row-info">
+                                <span class="label font-weight-bold">Nama Lengkap</span>
+                                <span class="info">Andika Harianto</span>
+                            </div>
+                            <div class="row-info">
+                                <span class="label font-weight-bold">Tanggal Lahir</span>
+                                <span class="info">21-02-1998</span>
+                            </div>
+                            <div class="row-info">
+                                <span class="label font-weight-bold">Gender</span>
+                                <span class="info">Laki-laki</span>
+                            </div>
+                            <div class="row-info">
+                                <span class="label font-weight-bold">Kota</span>
+                                <span class="info">Makassar</span>
+                            </div>
+                            <div class="row-info">
+                                <span class="label font-weight-bold">Tentang Saya</span>
+                                <p class="info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati aliquid nemo asperiores molestias nulla itaque cumque magnam. In tempore numquam sit earum saepe error sed unde ducimus cumque. Sed laudantium ab officiis optio nulla magni accusamus dolorum est. Quo sapiente ad esse est? Illum asperiores tempora praesentium nesciunt? Neque rem deleniti qui doloremque quam consequuntur eligendi harum quos similique non fugit nulla exercitationem iure quae quaerat est odio quas, tenetur debitis aliquam tempora? Tempore, sit culpa quidem accusamus harum quas!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="card-title">Cerita</h4>
+                    <div class="story-box mb-3">
+                        <div class="score-box mr-2">
+                            <div class="points-number text-center mb-0">18</div>
+                            <div class="points-text text-center">Points</div>
+                        </div>
+                        <div class="info">
+                            <h5 class="mb-0"><a href="google.com">Halo-halo Bandung</a></h5>
+                            <span class="text-story-info text font-weight-light">(3200 kata) by <a href="youtube.com">Andika</a> on 2020-03-06</span>
+                            <span class="text-story-info text tags font-weight-light">Tags: <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
+                                | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a> 
+                                | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block title %}
-	User profile
+	Profil Andika
 {% endblock %}

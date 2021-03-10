@@ -23,9 +23,23 @@ def featured_stories_view(request):
         "page":"featured"
     }
     return render(request,"story/stories.html",context)
+
 def story_view(request,story_id):
     context={
         "id":story_id,
         "rating":10
     }
     return render(request,"story/story.html",context)
+
+def post_story_view(request):
+    context={
+        "rating":10
+    }
+    return render(request,"story/posting_story.html",context)
+
+def edit_story_view(request,story_id):
+    context={
+        "id":story_id,
+        "rating":10
+    }
+    return render(request,"story/posting_story.html",context)

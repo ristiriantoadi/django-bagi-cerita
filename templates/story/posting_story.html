@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+{% load story_tags %}
+{% block content %}
+    {% include 'navbar.html' %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="card" style="width: 100%">
+                <div class="card-body">
+                    <h3 class="card-title">Posting Cerita</h3>
+                    <form>
+                        <div class="form-group">
+                          <!-- <label class="font-weight-bold" for="exampleFormControlInput1">Judul Cerita</label> -->
+                          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Judul Cerita">
+                        </div>
+                        <div class="form-group">
+                          <!-- <label for="exampleFormControlTextarea1">Example textar</label> -->
+                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="50"></textarea>
+                        </div>
+                        <div class="form-group" style="text-align: right;">
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %}
+	Posting Cerita
+{% endblock %}

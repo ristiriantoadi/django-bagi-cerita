@@ -31,8 +31,13 @@
     font-size: 0.9em;
 } */
 .text-story-info{
-    display: block !important;
+    /* display: block !important; */
+    display: block;
     font-size: 0.9em;
+}
+
+.button-story{
+    display: inline;
 }
 
 .searchbar {
@@ -76,6 +81,40 @@
 .reply-box.visible{
     display: block;
 }
+
 .checked {
     color: orange;
+}
+
+.profile{
+    display: flex;
+}
+
+.profile-info{
+    width: 80%;
+}
+
+.profile-info .row-info{
+    margin-bottom: 10px;
+}
+
+.profile-info .label{
+    display: block;
+    font-size: 1em;
+}
+
+.profile-info .info{
+    font-size: 0.9em;
+    /* margin-top:100px; */
+    /* padding-left:5px */
+}
+
+.profile-img{
+    background-position: center;
+    /* Make the background image cover the area of the <div>, and clip the excess */
+    background-size: cover;  
+    background-image: url('http://localhost:8000/static/user/man.svg');
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
 }

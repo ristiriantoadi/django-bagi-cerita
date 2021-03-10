@@ -8,14 +8,21 @@ def login_view(request,*args, **kwargs):
 def register_view(request,*args, **kwargs):
     raise Http404("there is no register page--register via popup")
 
-def user_profile_view(request,user_id):
+def user_profile_view(request,username):
     context = {
-        "id":user_id
+        "img":"user/123/something.jpg",
+        "page":"profil"
     }
     return render(request,"user/user_profile.html",context)
 
-def edit_user_profile_view(request,user_id):
+def edit_user_profile_view(request,username):
     context = {
-        "id":user_id
+        "username":username
     }
     return render(request,"user/edit_user_profile.html",context)
+
+def notifikasi_view(request,username):
+    context = {
+        "page":"notifikasi"
+    }
+    return render(request,"user/notifikasi.html",context)
