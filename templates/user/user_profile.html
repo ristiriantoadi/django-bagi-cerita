@@ -6,20 +6,7 @@
         <h2>Andika</h2>
         <div class="row">
             <div class="card" style="width: 100%">
-                <div class="card-header">
-                    <div class="row">
-                       <div class="col-lg-6 mb-4">
-                            <ul class="nav nav-tabs card-header-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link {% if page == 'profil' %} active {% endif %}" aria-current="true" href="/user/123/profil">Profil</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {% if page == 'notifikasi' %} active {% endif %} " href="/user/123/notifikasi">Notifikasi</a>
-                                </li>
-                            </ul>
-                       </div> 
-                    </div>
-                </div>
+                {% include 'user/profile_tab.html' %}
                 <div class="card-body">
                     <h3 class="card-title">Profil</h3>
                     <div class="profile">

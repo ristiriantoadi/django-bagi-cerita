@@ -57,16 +57,16 @@
         <div class="modal-body">
             <form>
                 <div class="form-group">
-                  <label for="inputUsername">Username</label>
-                  <input type="text" name="username" required class="form-control" id="inputUsername" placeholder="Username ... ">
+                  <label for="{{register_form.username.id_for_label}}">Username</label>
+                  <input type="text" name="{{register_form.username.name}}" required class="form-control" id="{{register_form.username.id_for_label}}" placeholder="Username ... ">
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword">Password</label>
-                  <input type="password" name="password" required class="form-control" id="inputPassword" placeholder="Password ... ">
+                  <label for="{{register_form.password1.id_for_label}}">Password</label>
+                  <input type="password" name="{{register_form.password1.name}}" required class="form-control" id="{{register_form.password1.id_for_label}}" placeholder="Password ... ">
                 </div>
                 <div class="form-group">
-                    <label for="inputPasswordKonfirmasi">Konfirmasi Password</label>
-                    <input type="password" name="konfirmasiPassword" required class="form-control" id="inputPasswordKonfirmasi" placeholder="Konfirmasi Password ... ">
+                    <label for="{{register_form.password2.id_for_label}}">Konfirmasi Password</label>
+                    <input type="password" name="{{register_form.password2.name}}" required class="form-control" id="{{register_form.password2.id_for_label}}" placeholder="Konfirmasi Password ... ">
                   </div>
                 <div class="form-group">
                     <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Sudah punya akun? Login</button>
