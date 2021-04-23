@@ -59,16 +59,16 @@
             <form action="/register" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
-                  <label for="{{register_form.username.id_for_label}}">Username</label>
-                  <input type="text" name="{{register_form.username.name}}" required class="form-control" id="{{register_form.username.id_for_label}}" placeholder="Username ... ">
+                  <label for="username">Username</label>
+                  <input type="text" name="username" required class="form-control" id="username" placeholder="Username ... ">
                 </div>
                 <div class="form-group">
-                  <label for="{{register_form.password1.id_for_label}}">Password</label>
-                  <input type="password" name="{{register_form.password1.name}}" required class="form-control" id="{{register_form.password1.id_for_label}}" placeholder="Password ... ">
+                  <label for="password1">Password</label>
+                  <input type="password" name="password1" required class="form-control" id="password1" placeholder="Password ... ">
                 </div>
                 <div class="form-group">
-                    <label for="{{register_form.password2.id_for_label}}">Konfirmasi Password</label>
-                    <input type="password" name="{{register_form.password2.name}}" required class="form-control" id="{{register_form.password2.id_for_label}}" placeholder="Konfirmasi Password ... ">
+                    <label for="password2">Konfirmasi Password</label>
+                    <input type="password" name="password2" required class="form-control" id="password2" placeholder="Konfirmasi Password ... ">
                   </div>
                 <div class="form-group">
                     <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Sudah punya akun? Login</button>
