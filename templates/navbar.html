@@ -26,7 +26,8 @@
           </button>
         </div>
         <div class="modal-body">
-            <form>
+            <form action="/login" method="POST">
+              {% csrf_token %}
                 <div class="form-group">
                   <label for="inputUsername">Username</label>
                   <input type="text" name="username" required class="form-control" id="inputUsername" placeholder="Username ... ">
@@ -55,7 +56,8 @@
           </button>
         </div>
         <div class="modal-body">
-            <form>
+            <form action="/register" method="POST">
+                {% csrf_token %}
                 <div class="form-group">
                   <label for="{{register_form.username.id_for_label}}">Username</label>
                   <input type="text" name="{{register_form.username.name}}" required class="form-control" id="{{register_form.username.id_for_label}}" placeholder="Username ... ">
