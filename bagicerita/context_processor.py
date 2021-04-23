@@ -8,7 +8,6 @@ def get_auth_form(request):
 
 def check_if_logged_in(request):
     if request.user.is_authenticated:
-        # return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
         return{
             'logged_in':True,
             'username':request.user.username

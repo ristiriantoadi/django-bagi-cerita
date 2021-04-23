@@ -22,7 +22,8 @@ def login_view(request,*args, **kwargs):
 def register_view(request,*args, **kwargs):
     if(request.method == "POST"):
         user = User.objects.create_user(request.POST.get('username'), 
-        request.POST.get('password'))
+        request.POST.get('password1'))
+        login(request,user)
         return redirect("stories")
     raise Http404("there is no register page--register via popup")
 
