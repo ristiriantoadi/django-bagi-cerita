@@ -79,7 +79,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'bagicerita.context_processor.get_auth_form'
+                'bagicerita.context_processor.get_auth_form',
+                'bagicerita.context_processor.check_if_logged_in'
             ],
         },
     },

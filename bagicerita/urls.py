@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from story.views import home_view
-from user.views import login_view, register_view
+from user.views import login_view, register_view,logout_view
 
 urlpatterns = [
     path('',home_view,name="home"), # this one will just redirect to stories/ url
@@ -26,4 +26,5 @@ urlpatterns = [
     path('user/',include('user.urls')),
     path('login',login_view,name="login"),
     path('register',register_view,name="register"),
+    path('logout',logout_view,name="logout")
 ]

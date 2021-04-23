@@ -5,13 +5,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav ml-auto">
-              <!-- if guest -->
+              {% if logged_in == False %}
+                <!-- if guest -->
                 <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Register</button>
-              <!-- if user / logged in -->
-                <!-- <a href="#" class="btn btn-link">Andika</a>
+              {%else %}
+                <!-- if user / logged in -->
+                <a href="#" class="btn btn-link">{{username}}</a>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Posting Cerita</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Logout</button> -->
+                <a href="/logout" class="btn btn-link">Logout</a>
+              {% endif %}
             </div>
         </div>
 </nav>  
@@ -29,12 +32,12 @@
             <form action="/login" method="POST">
               {% csrf_token %}
                 <div class="form-group">
-                  <label for="inputUsername">Username</label>
-                  <input type="text" name="username" required class="form-control" id="inputUsername" placeholder="Username ... ">
+                  <label for="username">Username</label>
+                  <input type="text" name="username" required class="form-control" id="username" placeholder="Username ... ">
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword">Password</label>
-                  <input type="password" name="password" required class="form-control" id="inputPassword" placeholder="Password ... ">
+                  <label for="password">Password</label>
+                  <input type="password" name="password" required class="form-control" id="password" placeholder="Password ... ">
                 </div>
                 <div class="form-group">
                     <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Belum punya akun? Daftar</button>
