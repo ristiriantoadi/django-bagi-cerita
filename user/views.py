@@ -38,10 +38,28 @@ def logout_view(request,*args, **kwargs):
     return redirect("stories")
 
 def user_profile_view(request,username):
+    user = User.objects.filter(username=username).first()
+    print(user)
     context = {
         "img":"user/123/something.jpg",
-        "page":"profil"
+        "nama_lengkap":"-",
+        "tanggal_lahir":"-",
+        "gender":"-",
+        "kota":"-",
+        "tentang_saya":"-",
+        "page":"profil",
+        "user":username
     }
+    try:
+        profile = user.profile
+        context['nama_lengkap'] = profile.nama_lengkap
+        context['tanggal_lahir'] = profile.tanggal_lahir
+        # context['gender'] = profile.gender
+        # context['kota'] = profile.kota
+        # context['tentang_saya'] = profile.tentang_saya
+    except Profile.DoesNotExist:
+        pass
+    
     return render(request,"user/user_profile.html",context)
 
 def edit_user_profile_view(request,username):

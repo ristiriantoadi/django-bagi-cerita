@@ -3,7 +3,7 @@
 {% block content %}
     {% include 'navbar.html' %}
     <div class="container mt-5">
-        <h2>Andika</h2>
+        <h2>{{user}}</h2>
         <div class="row">
             <div class="card" style="width: 100%">
                 {% include 'user/profile_tab.html' %}
@@ -14,23 +14,23 @@
                         <div class="profile-info ml-5">
                             <div class="row-info">
                                 <span class="label font-weight-bold">Nama Lengkap</span>
-                                <span class="info">Andika Harianto</span>
+                                <span class="info">{{nama_lengkap}}</span>
                             </div>
                             <div class="row-info">
                                 <span class="label font-weight-bold">Tanggal Lahir</span>
-                                <span class="info">21-02-1998</span>
+                                <span class="info">{{tanggal_lahir}}</span>
                             </div>
                             <div class="row-info">
                                 <span class="label font-weight-bold">Gender</span>
-                                <span class="info">Laki-laki</span>
+                                <span class="info">{{gender}}</span>
                             </div>
                             <div class="row-info">
                                 <span class="label font-weight-bold">Kota</span>
-                                <span class="info">Makassar</span>
+                                <span class="info">{{kota}}</span>
                             </div>
                             <div class="row-info">
                                 <span class="label font-weight-bold">Tentang Saya</span>
-                                <p class="info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati aliquid nemo asperiores molestias nulla itaque cumque magnam. In tempore numquam sit earum saepe error sed unde ducimus cumque. Sed laudantium ab officiis optio nulla magni accusamus dolorum est. Quo sapiente ad esse est? Illum asperiores tempora praesentium nesciunt? Neque rem deleniti qui doloremque quam consequuntur eligendi harum quos similique non fugit nulla exercitationem iure quae quaerat est odio quas, tenetur debitis aliquam tempora? Tempore, sit culpa quidem accusamus harum quas!</p>
+                                <p class="info">{{tentang_saya}}</p>
                             </div>
                         </div>
                     </div>
@@ -56,5 +56,5 @@
 {% endblock %}
 
 {% block title %}
-	Profil Andika
+	Profil {{user}}
 {% endblock %}
