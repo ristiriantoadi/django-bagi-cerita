@@ -16,3 +16,5 @@ def check_if_logged_in(request):
         return {
             'logged_in':False
         }
+
+def check

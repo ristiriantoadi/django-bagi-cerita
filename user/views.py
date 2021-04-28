@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseNotFound, Http404, HttpResponse
 from django.contrib.auth.models import User
+from user.models import Profile
 from django.contrib.auth import authenticate, login,logout
 
 # Create your views here.
@@ -11,8 +12,13 @@ def login_view(request,*args, **kwargs):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # Redirect to a success page.
-            return redirect("stories")
+            # Redirect
+            # check if user already have profile or not
+            try:
+                user.profile
+                return redirect("stories")
+            except Profile.DoesNotExist:
+                return redirect(f"/user/{user.username}/profile/edit")
         else:
             # Return an 'invalid login' error message.
             return HttpResponse("<h1>Wrong password or username</h1>")
