@@ -68,6 +68,8 @@ def edit_user_profile_view(request,username):
         gender = request.POST['gender']
         kota = request.POST['kota']
         tentang_saya = request.POST['tentang-saya']
+        profile_picture = request.FILES['profile-picture']
+        # print(request.FILES['profile-picture'])
         try:
             profile = request.user.profile
             profile.nama_lengkap = nama_lengkap
@@ -75,16 +77,20 @@ def edit_user_profile_view(request,username):
             profile.gender = gender
             profile.kota = kota
             profile.tentang_saya = tentang_saya
+            profile.profile_picture = profile_picture
             profile.save()
         except Profile.DoesNotExist:
-            Profile.objects.create(user=request.user,kota=kota,tentang_saya=tentang_saya,gender=gender,nama_lengkap=nama_lengkap,tanggal_lahir=tanggal_lahir)
+            Profile.objects.create(user=request.user,profile_picture=profile_picture,kota=kota,tentang_saya=tentang_saya,gender=gender,nama_lengkap=nama_lengkap,tanggal_lahir=tanggal_lahir)
         
         return redirect(f"/user/{request.user.username}/profile")
     
     context = {
         "username":username,
         "nama_lengkap":"",
-        "tanggal_lahir":""
+        "tanggal_lahir":"",
+        "gender":"",
+        "kota":"",
+        "tentang_saya":""
     }
 
     try:
@@ -92,10 +98,11 @@ def edit_user_profile_view(request,username):
         print("profile: "+str(profile.nama_lengkap))
         context['nama_lengkap'] = profile.nama_lengkap
         context['tanggal_lahir'] = profile.tanggal_lahir
+        context['gender'] = profile.gender
+        context['kota'] = profile.kota
+        context['tentang_saya']=profile.tentang_saya
     except Profile.DoesNotExist:
-        # Profile.objects.create(user=request.user,nama_lengkap=nama_lengkap,tanggal_lahir=tanggal_lahir)
-        # pass
-        print("pass")
+        pass
 
     print("context: "+str(context))
     return render(request,"user/edit_user_profile.html",context)
