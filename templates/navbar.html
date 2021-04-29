@@ -11,7 +11,7 @@
                 <button type="button" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Register</button>
               {%else %}
                 <!-- if user / logged in -->
-                <a href="#" class="btn btn-link">{{username}}</a>
+                <a href="/user/{{username}}/profile" class="btn btn-link">{{username}}</a>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Posting Cerita</button>
                 <a href="/logout" class="btn btn-link">Logout</a>
               {% endif %}

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load user_tags %}
 {% block content %}
     {% include 'navbar.html' %}
     <div class="container mt-5">
@@ -22,7 +23,7 @@
                             </div>
                             <div class="row-info">
                                 <span class="label font-weight-bold">Gender</span>
-                                <span class="info">{{gender}}</span>
+                                <span class="info">{{gender|render_gender}}</span>
                             </div>
                             <div class="row-info">
                                 <span class="label font-weight-bold">Kota</span>

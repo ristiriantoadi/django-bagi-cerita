@@ -53,9 +53,9 @@ def user_profile_view(request,username):
         profile = user.profile
         context['nama_lengkap'] = profile.nama_lengkap
         context['tanggal_lahir'] = profile.tanggal_lahir
-        # context['gender'] = profile.gender
-        # context['kota'] = profile.kota
-        # context['tentang_saya'] = profile.tentang_saya
+        context['gender'] = profile.gender
+        context['kota'] = profile.kota
+        context['tentang_saya'] = profile.tentang_saya
     except Profile.DoesNotExist:
         pass
     
@@ -65,18 +65,39 @@ def edit_user_profile_view(request,username):
     if(request.method == "POST"):
         nama_lengkap = request.POST['nama-lengkap']
         tanggal_lahir = request.POST['tanggal-lahir']
+        gender = request.POST['gender']
+        kota = request.POST['kota']
+        tentang_saya = request.POST['tentang-saya']
         try:
             profile = request.user.profile
             profile.nama_lengkap = nama_lengkap
             profile.tanggal_lahir = tanggal_lahir
+            profile.gender = gender
+            profile.kota = kota
+            profile.tentang_saya = tentang_saya
             profile.save()
         except Profile.DoesNotExist:
-            Profile.objects.create(user=request.user,nama_lengkap=nama_lengkap,tanggal_lahir=tanggal_lahir)
+            Profile.objects.create(user=request.user,kota=kota,tentang_saya=tentang_saya,gender=gender,nama_lengkap=nama_lengkap,tanggal_lahir=tanggal_lahir)
         
         return redirect(f"/user/{request.user.username}/profile")
+    
     context = {
-        "username":username
+        "username":username,
+        "nama_lengkap":"",
+        "tanggal_lahir":""
     }
+
+    try:
+        profile = request.user.profile
+        print("profile: "+str(profile.nama_lengkap))
+        context['nama_lengkap'] = profile.nama_lengkap
+        context['tanggal_lahir'] = profile.tanggal_lahir
+    except Profile.DoesNotExist:
+        # Profile.objects.create(user=request.user,nama_lengkap=nama_lengkap,tanggal_lahir=tanggal_lahir)
+        # pass
+        print("pass")
+
+    print("context: "+str(context))
     return render(request,"user/edit_user_profile.html",context)
 
 def notifikasi_view(request,username):
