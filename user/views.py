@@ -27,8 +27,8 @@ def login_view(request,*args, **kwargs):
 
 def register_view(request,*args, **kwargs):
     if(request.method == "POST"):
-        user = User.objects.create_user(request.POST.get('username'), 
-        request.POST.get('password1'))
+        user = User.objects.create_user(username=request.POST.get('username'), 
+        password=request.POST.get('password1'))
         login(request,user)
         return redirect("stories")
     raise Http404("there is no register page--register via popup")
@@ -39,7 +39,6 @@ def logout_view(request,*args, **kwargs):
 
 def user_profile_view(request,username):
     user = User.objects.filter(username=username).first()
-    print(user)
     context = {
         "img":"user/123/something.jpg",
         "nama_lengkap":"-",
@@ -63,6 +62,18 @@ def user_profile_view(request,username):
     return render(request,"user/user_profile.html",context)
 
 def edit_user_profile_view(request,username):
+    if(request.method == "POST"):
+        nama_lengkap = request.POST['nama-lengkap']
+        tanggal_lahir = request.POST['tanggal-lahir']
+        try:
+            profile = request.user.profile
+            profile.nama_lengkap = nama_lengkap
+            profile.tanggal_lahir = tanggal_lahir
+            profile.save()
+        except Profile.DoesNotExist:
+            Profile.objects.create(user=request.user,nama_lengkap=nama_lengkap,tanggal_lahir=tanggal_lahir)
+        
+        return redirect(f"/user/{request.user.username}/profile")
     context = {
         "username":username
     }
