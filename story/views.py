@@ -1,15 +1,21 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
+from story.models import Story
 
 # Create your views here.
 def home_view(request,*args, **kwargs):
     return redirect("stories")
 
 def stories_view(request):
-    form = UserCreationForm()
+
+    # get all stories
+    stories = Story.objects.all()
+
+    # form = UserCreationForm()
     context={
         "page":"stories",
-        "form":form
+        "stories": stories
+        # "form":form
     }
     return render(request,"story/stories.html",context)
 

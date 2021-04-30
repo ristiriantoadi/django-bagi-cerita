@@ -64,7 +64,12 @@ def user_profile_view(request,username):
             context["img"] = profile.profile_picture
     except Profile.DoesNotExist:
         pass
-    
+
+    # get user stories
+    stories=user.story_set.all()
+    print("stories: "+str(stories))
+    context['stories'] = stories
+
     return render(request,"user/user_profile.html",context)
 
 def edit_user_profile_view(request,username):
@@ -99,7 +104,8 @@ def edit_user_profile_view(request,username):
         "tanggal_lahir":"",
         "gender":"",
         "kota":"",
-        "tentang_saya":""
+        "tentang_saya":"",
+        "profile_picture":"-"
     }
 
     try:
@@ -109,6 +115,8 @@ def edit_user_profile_view(request,username):
         context['gender'] = profile.gender
         context['kota'] = profile.kota
         context['tentang_saya']=profile.tentang_saya
+        if(profile.profile_picture):
+            context['profile_picture'] = profile.profile_picture
     except Profile.DoesNotExist:
         pass
 
