@@ -40,7 +40,7 @@ def logout_view(request,*args, **kwargs):
 def user_profile_view(request,username):
     user = User.objects.filter(username=username).first()
     context = {
-        "img":"user/123/something.jpg",
+        "img":"profile_picture/man.svg",
         "nama_lengkap":"-",
         "tanggal_lahir":"-",
         "gender":"-",
@@ -56,6 +56,8 @@ def user_profile_view(request,username):
         context['gender'] = profile.gender
         context['kota'] = profile.kota
         context['tentang_saya'] = profile.tentang_saya
+        context["img"] = profile.profile_picture
+        print("image: "+str(context["img"]))
     except Profile.DoesNotExist:
         pass
     

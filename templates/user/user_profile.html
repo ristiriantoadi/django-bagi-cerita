@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Profil</h3>
                     <div class="profile">
-                        <div {% if img %} style="background-image: url('http://localhost:8000/static/{{ img }}')" {% endif %} class="profile-img"></div>
+                        <div {% if img %} style="background-image: url('/media/{{ img }}')" {% endif %} class="profile-img"></div>
                         <div class="profile-info ml-5">
                             <div class="row-info">
                                 <span class="label font-weight-bold">Nama Lengkap</span>

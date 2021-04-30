@@ -19,6 +19,9 @@ from django.urls import include, path
 from story.views import home_view
 from user.views import login_view, register_view,logout_view
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('',home_view,name="home"), # this one will just redirect to stories/ url
     path('admin/', admin.site.urls),
@@ -28,3 +31,6 @@ urlpatterns = [
     path('register',register_view,name="register"),
     path('logout',logout_view,name="logout")
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
