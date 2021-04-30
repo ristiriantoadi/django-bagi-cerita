@@ -20,8 +20,16 @@
                         <div class="form-group">
                             <label for="gender">Gender</label>
                             <select class="form-control" id="gender" name="gender">
-                                <option value="L">Laki-laki</option>
-                                <option value="P">Perempuan</option>
+                                {% if gender == "L" %}
+                                    <option value="L" selected>Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                {% elif gender == "P" %}
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P" selected>Perempuan</option>
+                                {%else %}
+                                    <option value="L" selected>Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                {% endif %}
                             </select>
                         </div>
                         <div class="form-group">

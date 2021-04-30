@@ -30,7 +30,11 @@ def register_view(request,*args, **kwargs):
         user = User.objects.create_user(username=request.POST.get('username'), 
         password=request.POST.get('password1'))
         login(request,user)
-        return redirect("stories")
+        try:
+            profile = user.profile
+            return redirect("stories")
+        except Profile.DoesNotExist:
+            return redirect(f"user/{user.username}/profile/edit")
     raise Http404("there is no register page--register via popup")
 
 def logout_view(request,*args, **kwargs):
@@ -56,8 +60,8 @@ def user_profile_view(request,username):
         context['gender'] = profile.gender
         context['kota'] = profile.kota
         context['tentang_saya'] = profile.tentang_saya
-        context["img"] = profile.profile_picture
-        print("image: "+str(context["img"]))
+        if(profile.profile_picture):
+            context["img"] = profile.profile_picture
     except Profile.DoesNotExist:
         pass
     
@@ -70,8 +74,10 @@ def edit_user_profile_view(request,username):
         gender = request.POST['gender']
         kota = request.POST['kota']
         tentang_saya = request.POST['tentang-saya']
-        profile_picture = request.FILES['profile-picture']
-        # print(request.FILES['profile-picture'])
+        if(request.FILES):
+            profile_picture = request.FILES['profile-picture']
+        else:
+            profile_picture=None
         try:
             profile = request.user.profile
             profile.nama_lengkap = nama_lengkap
@@ -79,7 +85,8 @@ def edit_user_profile_view(request,username):
             profile.gender = gender
             profile.kota = kota
             profile.tentang_saya = tentang_saya
-            profile.profile_picture = profile_picture
+            if(profile_picture != None):
+                profile.profile_picture = profile_picture
             profile.save()
         except Profile.DoesNotExist:
             Profile.objects.create(user=request.user,profile_picture=profile_picture,kota=kota,tentang_saya=tentang_saya,gender=gender,nama_lengkap=nama_lengkap,tanggal_lahir=tanggal_lahir)
@@ -97,7 +104,6 @@ def edit_user_profile_view(request,username):
 
     try:
         profile = request.user.profile
-        print("profile: "+str(profile.nama_lengkap))
         context['nama_lengkap'] = profile.nama_lengkap
         context['tanggal_lahir'] = profile.tanggal_lahir
         context['gender'] = profile.gender
