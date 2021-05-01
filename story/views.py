@@ -65,7 +65,7 @@ def story_view(request,story_id):
         "have_commented":"False"
     }
     for comment in context['comments']:
-        print("comment id: "+str(comment.id))
+        print("comment: "+str(comment))
         if(comment.user.id == request.user.id):
             context['have_commented']="True"
     
@@ -132,9 +132,25 @@ def get_story(story_id):
     return story
 
 def get_comments(story_id):
-    comments = Story.objects.get(id=story_id).comment_set.filter(replied_comment_id=0)
+    story_comments = Story.objects.get(id=story_id).comment_set.filter(replied_comment_id=0)
+    return iterate_through_comments_and_get_replies(story_comments)
+
+def get_replies(comment_id):
+    comment_replies = Comment.objects.filter(replied_comment_id=comment_id) 
+    return iterate_through_comments_and_get_replies(comment_replies)
+
+def iterate_through_comments_and_get_replies(comments):
+    # comments_to_return=[]
+    for comment in comments:
+        # comment_item={
+        #     "comment":comment,
+        #     "replies": get_replies(comment.id)
+        # }
+        comment.replies = get_replies(comment.id)
+        # comments_to_return.append(comment_item)
     return comments
 
+    
 def calculate_stories_rating(stories):
     for story in stories:
         story = calculate_story_rating(story)
