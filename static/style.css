@@ -53,6 +53,7 @@
     display: flex;
     justify-content: space-between;
     padding-right: 130px;
+    align-items: center;
 }
 
 .text-story-info{
