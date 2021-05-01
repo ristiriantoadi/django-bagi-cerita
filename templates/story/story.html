@@ -53,53 +53,19 @@
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
-                        <div class="comment mb-2">
-                            <h6 class="user font-weight-bold">Jihan</h6>
-                            <span class="date font-weight-light">(26-08-2020)</span>
-                            <span class="rating">
-                                {% if rating %}
-                                    {{ rating | render_rating }}
-                                {% endif %}
-                            </span>
-                            <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
-                            <div class="login-to-comment">
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
-                            </div>
-                            <!-- the replies live here-->
+                        {% for comment in comments %}
                             <div class="ml-5 comment mb-2">
-                                <h6 class="user font-weight-bold">Jihan</h6>
+                                <h6 class="user font-weight-bold">{{comment.user.username}}</h6>
                                 <span class="date font-weight-light">(26-08-2020)</span>
-                                <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
+                                <span class="rating">
+                                    {{ comment.rating | render_rating }}
+                                </span>
+                                <p class="content">{{comment.content}}</p>
                                 <div class="login-to-comment">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
-                                </div>
-                                <div class="ml-5 comment mb-2">
-                                    <h6 class="user font-weight-bold">Jihan</h6>
-                                    <span class="date font-weight-light">(26-08-2020)</span>
-                                    <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
-                                    <div class="login-to-comment">
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
-                                        <button onclick="showReplyBox(this)" type="button" data-target="reply-box-1" class="btn btn-link">Reply</button>
-                                        <form class="reply-box" id="reply-box-1">
-                                            <div class="form-group no-gutters">
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                            </div>
-                                            <div class="container-button-submit">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </div>                
-                                        </form>
-                                    </div>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to reply</button>
                                 </div>
                             </div>
-                            <div class="ml-5 comment mb-2">
-                                <h6 class="user font-weight-bold">Jihan</h6>
-                                <span class="date font-weight-light">(26-08-2020)</span>
-                                <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nisi cum eum neque necessitatibus tempora magnam assumenda ratione odio nemo!</p>
-                                <div class="login-to-comment">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
