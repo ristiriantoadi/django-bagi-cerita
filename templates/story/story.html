@@ -8,20 +8,25 @@
                 <div class="card-body">
                     <a href="/stories">Home</a>
                     <div class="story">
-                        <div class="story-info mb-5">
-                            <h3 class="card-title">{{story.title}}</h3>
-                            <p><b>Rating: {{story.rating}}</b></p>
-                            <span class="text-story-info font-weight-light">(3200 kata) by <a href="youtube.com">{{story.user.username}}</a> on {{story.date_posted}}</span>
-                            <span class="text-story-info tags font-weight-light">Tags: <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
-                                <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a> 
-                                | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
-                            </span>
-                            {% if request.user.is_authenticated %}
-                                {% if request.user.username == story.user.username %}
-                                    <span class="text-story-info button-story font-weight-light"><a href="/stories/{{story.id}}/edit">Edit Cerita</a></span>
-                                    <span class="text-story-info button-story font-weight-light"><a href="/stories/{{story.id}}/delete">Hapus Cerita</a></span>
+                        <div class="story-info-container">
+                            <div class="story-info mb-5">
+                                <h3 class="card-title">{{story.title}}</h3>
+                                <span class="text-story-info font-weight-light">(3200 kata) by <a href="/user/{{story.user.username}}/profile">{{story.user.username}}</a> on {{story.date_posted}}</span>
+                                <span class="text-story-info tags font-weight-light">Tags: <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
+                                    <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a> 
+                                    | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
+                                </span>
+                                {% if request.user.is_authenticated %}
+                                    {% if request.user.username == story.user.username %}
+                                        <span class="text-story-info button-story font-weight-light"><a href="/stories/{{story.id}}/edit">Edit Cerita</a></span>
+                                        <span class="text-story-info button-story font-weight-light"><a href="/stories/{{story.id}}/delete">Hapus Cerita</a></span>
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
+                            </div>
+                            <div class="score-box story-page mr-2">
+                                <div class="points-number text-center mb-0">{{story.rating}}</div>
+                                <div class="points-text text-center">Points</div>
+                            </div>
                         </div>
                         <div class="story-content">
                             <p>{{story.content}}</p>

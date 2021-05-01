@@ -1,16 +1,34 @@
 .score-box{
-    /* background-color: #0b6623; */
+    background-color: #0b6623;
     background-color: #005CBF;
-    padding: 10px 20px;
-    color: white;
+    color: white; 
+    height: 80px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.score-box.story-page{
+    /* font-size: 24px; */
+    height: 120px;
+    width: 120px;
 }
 
 .points-number{
-    font-size: 35px;
+    font-size: 2em;
 }
 
 .points-text{
-    font-size: 10px;
+    font-size: 0.7em;
+}
+
+.score-box.story-page .points-number{
+    font-size: 3em;
+}
+
+.score-box.story-page .points-text{
+    font-size: 1em;
 }
 
 .story-box{
@@ -30,6 +48,13 @@
     display: block;
     font-size: 0.9em;
 } */
+
+.story-info-container{
+    display: flex;
+    justify-content: space-between;
+    padding-right: 130px;
+}
+
 .text-story-info{
     /* display: block !important; */
     display: block;

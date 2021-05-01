@@ -3,6 +3,7 @@ from django.http import HttpResponseNotFound, Http404, HttpResponse
 from django.contrib.auth.models import User
 from user.models import Profile
 from django.contrib.auth import authenticate, login,logout
+from story.views import calculate_stories_rating, calculate_story_rating
 
 # Create your views here.
 def login_view(request,*args, **kwargs):
@@ -53,7 +54,7 @@ def user_profile_view(request,username):
         "kota":"-",
         "tentang_saya":"-",
         "page":"profil",
-        "user":username
+        "username":username
     }
     try:
         profile = user.profile
@@ -69,7 +70,7 @@ def user_profile_view(request,username):
 
     # get user stories
     stories=user.story_set.all()
-    print("stories: "+str(stories))
+    stories = calculate_stories_rating(stories)
     context['stories'] = stories
 
     return render(request,"user/user_profile.html",context)
@@ -127,6 +128,7 @@ def edit_user_profile_view(request,username):
 
 def notifikasi_view(request,username):
     context = {
-        "page":"notifikasi"
+        "page":"notifikasi",
+        "username":username
     }
     return render(request,"user/notifikasi.html",context)

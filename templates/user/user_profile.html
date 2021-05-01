@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load user_tags %}
+{% load story_tags %}
 {% block content %}
     {% include 'navbar.html' %}
     <div class="container mt-5">
-        <h2>{{user}}</h2>
+        <h2>{{username}}</h2>
         <div class="row">
             <div class="card" style="width: 100%">
                 {% include 'user/profile_tab.html' %}
@@ -37,20 +38,7 @@
                     </div>
                     <h4 class="card-title">Cerita</h4>
                     {% for story in stories %}
-                        <div class="story-box mb-3">
-                            <div class="score-box mr-2">
-                                <div class="points-number text-center mb-0">18</div>
-                                <div class="points-text text-center">Points</div>
-                            </div>
-                            <div class="info">
-                                <h5 class="mb-0"><a href="google.com">{{story.title}}</a></h5>
-                                <span class="text-story-info text font-weight-light">(3200 kata) by <a href="youtube.com">{{story.user.username}}</a> on {{story.date_posted}}</span>
-                                <span class="text-story-info text tags font-weight-light">Tags: <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
-                                    | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a> 
-                                    | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
-                                </span>
-                            </div>
-                        </div>
+                        {{story|render_story_box}}
                     {% endfor %}
                 </div>
             </div>
@@ -59,5 +47,5 @@
 {% endblock %}
 
 {% block title %}
-	Profil {{user}}
+	Profil {{username}}
 {% endblock %}

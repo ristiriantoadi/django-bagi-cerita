@@ -2,7 +2,7 @@
 {% block content %}
     {% include 'navbar.html' %}
     <div class="container mt-5">
-        <h2>Andika</h2>
+        <h2>{{username}}</h2>
         <div class="row">
             <div class="card" style="width: 100%">
                 {% include 'user/profile_tab.html' %}                
@@ -23,5 +23,5 @@
 {% endblock %}
 
 {% block title %}
-	Notifikasi Andika
+	Notifikasi {{username}}
 {% endblock %}
