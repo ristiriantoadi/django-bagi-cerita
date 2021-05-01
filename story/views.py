@@ -56,9 +56,13 @@ def story_view(request,story_id):
         "id":story_id,
         "rating":10,
         "story":get_story(story_id),
-        "comments":get_comments(story_id)
+        "comments":get_comments(story_id),
+        "have_commented":"False"
     }
-    print("comments: "+str(context["comments"]))
+    for comment in context['comments']:
+        if(comment.user.id == request.user.id):
+            context['have_commented']="True"
+    
     return render(request,"story/story.html",context)
 
 #post story / add story / create story
