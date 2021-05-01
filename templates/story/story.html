@@ -65,7 +65,7 @@
                             {% endif %}
                         {% endif %}
                         {% for comment in comments %}
-                            <div class="ml-5 comment mb-2">
+                            <div class="comment mb-2">
                                 <h6 class="user font-weight-bold">{{comment.user.username}}</h6>
                                 <span class="date font-weight-light">(26-08-2020)</span>
                                 <span class="rating">
@@ -74,7 +74,7 @@
                                 <p class="content">{{comment.content}}</p>
                                 <div class="login-to-comment">
                                     {% if request.user.is_authenticated %}
-                                        <!-- this below is the reply button and the reply box -- i will use django if here -->
+                                        <!-- this below is the reply button and the reply box-->
                                         <button onclick="showReplyBox(this)" type="button" data-target="reply-box-1" class="btn btn-link">Reply</button>
                                         <form class="reply-box" id="reply-box-1">
                                             <div class="form-group no-gutters">

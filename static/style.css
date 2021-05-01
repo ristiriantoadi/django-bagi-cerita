@@ -11,8 +11,8 @@
 }
 .score-box.story-page{
     /* font-size: 24px; */
-    height: 120px;
-    width: 120px;
+    height: 100px;
+    width: 100px;
 }
 
 .points-number{
@@ -54,6 +54,7 @@
     justify-content: space-between;
     padding-right: 130px;
     align-items: center;
+    margin-bottom: 30px;
 }
 
 .text-story-info{
