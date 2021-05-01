@@ -34,5 +34,6 @@ class Comment(models.Model):
     # or, if it's not possible to make the story data = null, then story data AND replied_comment_id != 0
     # either way, a reply HAVE replied_comment_id != 0 -- period
     # that's how you knew it's a reply or a original comment
-    # replied_comment_id != 0 -- means reply
     
+    # replied_comment_id != 0 -- means reply
+    # replied_comment_id == 0 -- means original comment    

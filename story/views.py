@@ -45,11 +45,16 @@ def story_view(request,story_id):
 
     # add comment or reply
     if(request.method == "POST"):
-        rating = request.POST.get('rating')
+        rating=0
+        if(request.POST.get("rating")):
+            rating = request.POST.get('rating')
         content = request.POST.get('content') 
         user = request.user
         story = Story.objects.get(id=story_id)
-        obj = Comment.objects.create(rating=rating,content=content,user=user,story=story)
+        replied_comment_id = 0
+        if(request.POST.get('replied_comment_id')):
+            replied_comment_id = int(request.POST.get('replied_comment_id'))
+        obj = Comment.objects.create(rating=rating,content=content,user=user,replied_comment_id=replied_comment_id,story=story)
         return redirect(f"/stories/{story_id}")
 
     context={
@@ -60,6 +65,7 @@ def story_view(request,story_id):
         "have_commented":"False"
     }
     for comment in context['comments']:
+        print("comment id: "+str(comment.id))
         if(comment.user.id == request.user.id):
             context['have_commented']="True"
     
@@ -126,7 +132,7 @@ def get_story(story_id):
     return story
 
 def get_comments(story_id):
-    comments = Story.objects.get(id=story_id).comment_set.all()
+    comments = Story.objects.get(id=story_id).comment_set.filter(replied_comment_id=0)
     return comments
 
 def calculate_stories_rating(stories):
