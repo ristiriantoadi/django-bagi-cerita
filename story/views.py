@@ -14,12 +14,20 @@ def stories_view(request):
     # get all stories
     stories = Story.objects.all()
 
-    # form = UserCreationForm()
+    # for each story, calculate the rating
+    for story in stories:
+        # aggregate the rating in each comment for ALL comments
+        comments = story.comment_set.filter(replied_comment_id=0)
+        story_rating=0
+        for comment in comments:
+            story_rating+=comment.rating
+        story.rating = story_rating
+
     context={
         "page":"stories",
         "stories": stories
-        # "form":form
     }
+    # print("stories: "+str(context["stories"]))
     return render(request,"story/stories.html",context)
 
 def popular_stories_view(request):
