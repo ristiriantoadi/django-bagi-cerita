@@ -28,31 +28,32 @@
                     </div>
                     <div class="comments">
                         <h4 class="card-title">Komentar</h4>
-                        <!-- <form method="POST" action="/stories/{{story.id}}/comment/add" class="comment-box"> -->
-                        <form method="POST" class="comment-box">
-                            {% csrf_token %}
-                            <div class="form-skor form-group no-gutters">
-                                <label class="item mr-1" for="exampleFormControlSelect1">Skor</label>
-                                <select name="rating" class="item col-sm-1 form-control  form-control-sm" id="exampleFormControlSelect1">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                  <option value="5">5</option>
-                                  <option value="6">6</option>
-                                  <option value="7">7</option>
-                                  <option value="8">8</option>
-                                  <option value="9">9</option>
-                                  <option value="10">10</option>
-                                </select>
-                            </div>
-                            <div class="form-group no-gutters">
-                                <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-                            <div class="container-button-submit">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
+                        {% if request.user.is_authenticated %}
+                            <form method="POST" class="comment-box">
+                                {% csrf_token %}
+                                <div class="form-skor form-group no-gutters">
+                                    <label class="item mr-1" for="exampleFormControlSelect1">Skor</label>
+                                    <select name="rating" class="item col-sm-1 form-control  form-control-sm" id="exampleFormControlSelect1">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="form-group no-gutters">
+                                    <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="container-button-submit">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        {% endif %}
                         {% for comment in comments %}
                             <div class="ml-5 comment mb-2">
                                 <h6 class="user font-weight-bold">{{comment.user.username}}</h6>
@@ -62,7 +63,20 @@
                                 </span>
                                 <p class="content">{{comment.content}}</p>
                                 <div class="login-to-comment">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to reply</button>
+                                    {% if request.user.is_authenticated %}
+                                        <!-- this below is the reply button and the reply box -- i will use django if here -->
+                                        <button onclick="showReplyBox(this)" type="button" data-target="reply-box-1" class="btn btn-link">Reply</button>
+                                        <form class="reply-box" id="reply-box-1">
+                                            <div class="form-group no-gutters">
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            </div>
+                                            <div class="container-button-submit">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>                
+                                        </form>
+                                    {%else %}
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to reply</button>
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}
