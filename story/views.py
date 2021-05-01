@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
-from story.models import Story
+from story.models import Story,Comment
 from datetime import datetime
 from django.http import Http404
 
@@ -40,14 +40,25 @@ def featured_stories_view(request):
     }
     return render(request,"story/stories.html",context)
 
-# get story
+# get story  / story view
 def story_view(request,story_id):
+
+    # add comment or reply
+    if(request.method == "POST"):
+        rating = request.POST.get('rating')
+        content = request.POST.get('content') 
+        user = request.user
+        story = Story.objects.get(id=story_id)
+        obj = Comment.objects.create(rating=rating,content=content,user=user,story=story)
+        return redirect(f"/stories/{story_id}")
 
     context={
         "id":story_id,
         "rating":10,
-        "story":get_story(story_id)
+        "story":get_story(story_id),
+        "comments":get_comments(story_id)
     }
+    print("comments: "+str(context["comments"]))
     return render(request,"story/story.html",context)
 
 #post story / add story / create story
@@ -93,6 +104,13 @@ def delete_story_view(request,story_id):
     return redirect("stories")
     # return render(request,"story/posting_story.html",context)
 
+# add comments
+def add_comment_view(request,story_id):
+    
+    # add comment
+    return redirect("stories")
+    
+
 
 # helper functions
 def get_story(story_id):
@@ -103,3 +121,7 @@ def get_story(story_id):
         raise Http404("Story does not exist")
 
     return story
+
+def get_comments(story_id):
+    comments = Story.objects.get(id=story_id).comment_set.all()
+    return comments
