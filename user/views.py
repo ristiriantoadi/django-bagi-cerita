@@ -16,7 +16,8 @@ def login_view(request,*args, **kwargs):
             # check if user already have profile or not
             try:
                 user.profile
-                return redirect("stories")
+                next_url = request.POST['next']
+                return redirect(next_url)
             except Profile.DoesNotExist:
                 return redirect(f"/user/{user.username}/profile/edit")
         else:
@@ -39,7 +40,8 @@ def register_view(request,*args, **kwargs):
 
 def logout_view(request,*args, **kwargs):
     logout(request)
-    return redirect("stories")
+    next_url = request.GET['next']
+    return redirect(next_url)
 
 def user_profile_view(request,username):
     user = User.objects.filter(username=username).first()

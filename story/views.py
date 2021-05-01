@@ -13,21 +13,13 @@ def stories_view(request):
 
     # get all stories
     stories = Story.objects.all()
-
-    # for each story, calculate the rating
-    for story in stories:
-        # aggregate the rating in each comment for ALL comments
-        comments = story.comment_set.filter(replied_comment_id=0)
-        story_rating=0
-        for comment in comments:
-            story_rating+=comment.rating
-        story.rating = story_rating
+    stories = calculate_stories_rating(stories)
 
     context={
         "page":"stories",
         "stories": stories
     }
-    # print("stories: "+str(context["stories"]))
+
     return render(request,"story/stories.html",context)
 
 def popular_stories_view(request):
@@ -63,7 +55,7 @@ def story_view(request,story_id):
     context={
         "id":story_id,
         "rating":10,
-        "story":get_story(story_id),
+        "story":calculate_story_rating(get_story(story_id)),
         "comments":get_comments(story_id),
         "have_commented":"False"
     }
@@ -114,7 +106,6 @@ def delete_story_view(request,story_id):
     obj.delete()
 
     return redirect("stories")
-    # return render(request,"story/posting_story.html",context)
 
 # add comments
 def add_comment_view(request,story_id):
@@ -137,3 +128,17 @@ def get_story(story_id):
 def get_comments(story_id):
     comments = Story.objects.get(id=story_id).comment_set.all()
     return comments
+
+def calculate_stories_rating(stories):
+    for story in stories:
+        story = calculate_story_rating(story)
+    return stories
+
+def calculate_story_rating(story):
+    # aggregate the rating in each comment for ALL comments
+    comments = story.comment_set.filter(replied_comment_id=0)
+    story_rating=0
+    for comment in comments:
+        story_rating+=comment.rating
+    story.rating = story_rating
+    return story

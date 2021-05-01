@@ -14,7 +14,7 @@
                 <a href="/user/{{username}}/profile" class="btn btn-link">{{username}}</a>
                 <a href="/stories/post" class="btn btn-link">Posting Cerita</a>
                 <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Posting Cerita</button> -->
-                <a href="/logout" class="btn btn-link">Logout</a>
+                <a href="/logout?next={{request.path_info}}" class="btn btn-link">Logout</a>
               {% endif %}
             </div>
         </div>
@@ -43,6 +43,7 @@
                 <div class="form-group">
                     <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Belum punya akun? Daftar</button>
                 </div>
+                <input type="hidden" name="next" value="{{request.path_info}}">
                 <button type="submit" class="btn btn-primary">Login</button>
               </form>
         </div>
