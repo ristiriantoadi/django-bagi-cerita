@@ -9,18 +9,21 @@
                     <a href="/stories">Home</a>
                     <div class="story">
                         <div class="story-info mb-5">
-                            <h3 class="card-title">Judul Cerita di Sini</h3>
-                            <span class="text-story-info font-weight-light">(3200 kata) by <a href="youtube.com">Andika</a> on 2020-03-06</span>
+                            <h3 class="card-title">{{story.title}}</h3>
+                            <span class="text-story-info font-weight-light">(3200 kata) by <a href="youtube.com">{{story.user.username}}</a> on {{story.date_posted}}</span>
                             <span class="text-story-info tags font-weight-light">Tags: <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
                                 <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a> 
                                 | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
                             </span>
-                            <span class="text-story-info button-story font-weight-light"><a href="#">Edit Cerita</a></span>
-                            <span class="text-story-info button-story font-weight-light"><a href="#">Hapus Cerita</a></span>
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.username == story.user.username %}
+                                    <span class="text-story-info button-story font-weight-light"><a href="/stories/{{story.id}}/edit">Edit Cerita</a></span>
+                                    <span class="text-story-info button-story font-weight-light"><a href="/stories/{{story.id}}/delete">Hapus Cerita</a></span>
+                                {% endif %}
+                            {% endif %}
                         </div>
                         <div class="story-content">
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi explicabo consequatur eos corporis fuga possimus provident itaque veniam voluptatem esse hic necessitatibus ratione quos consequuntur unde similique blanditiis, alias adipisci ea, saepe cumque libero animi. Nulla officia in accusantium ipsa eaque illum laborum consequuntur, provident porro quod animi tempora fugiat. Reprehenderit, minus, eos vel molestias possimus ducimus eaque quasi culpa fugiat sed repellendus dolorem tempore omnis commodi pariatur neque mollitia. Earum impedit sed eligendi? Expedita doloribus dicta velit sunt facere.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet qui eius voluptatem similique voluptatum dolores minus praesentium molestias esse soluta sunt reprehenderit saepe, eveniet assumenda porro harum! Dolor unde laudantium obcaecati, esse ex quidem est veritatis voluptatibus accusamus quia magnam quod minus repellat, mollitia tempore? Consequuntur praesentium beatae, quae nostrum ab eaque quam neque vitae ipsum delectus nisi illum dignissimos repudiandae fuga maxime rem maiores! Aut pariatur placeat iure ab. Atque quam voluptate ratione perferendis, possimus asperiores vero. Nesciunt fugiat iste eveniet nulla. Inventore vel optio nihil eos, vitae hic, quibusdam tenetur qui impedit voluptates sint fugit rerum unde? Eos ducimus est tenetur dicta. Harum quisquam iure porro, consequatur qui cum tempora vel earum eius ratione sed vero nisi beatae dignissimos adipisci rerum quam error facere quaerat temporibus necessitatibus. Itaque praesentium iure quia iste delectus aut doloremque. Veniam esse explicabo quis modi id. Veniam, nostrum et dolore laborum consectetur illum. Illo minus minima ducimus, unde pariatur quasi perferendis praesentium nemo, accusamus, quis neque? Voluptate id, officiis adipisci provident a cumque beatae sunt voluptatem quis, error et, rem eos sint expedita quam accusantium eaque consectetur aliquam exercitationem maiores distinctio ea vitae? Enim ad architecto unde hic possimus maxime eveniet itaque voluptatum?</p>
+                            <p>{{story.content}}</p>
                         </div>
                     </div>
                     <div class="comments">
@@ -109,5 +112,5 @@
 {% endblock %}
 
 {% block title %}
-	{{id}}
+	{{story.title}}
 {% endblock %}

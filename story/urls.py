@@ -7,7 +7,8 @@ from .views import (
     stories_view,
     story_view,
     post_story_view,
-    edit_story_view
+    edit_story_view,
+    delete_story_view
 )
 
 urlpatterns = [
@@ -18,5 +19,6 @@ urlpatterns = [
     path('<int:story_id>',story_view,name="story"),
     path('post',post_story_view,name="post_story"),
     path('<int:story_id>/edit',edit_story_view,name="edit_story"),
+    path('<int:story_id>/delete',delete_story_view,name="delete_story"),
     
 ]

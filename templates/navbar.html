@@ -12,7 +12,8 @@
               {%else %}
                 <!-- if user / logged in -->
                 <a href="/user/{{username}}/profile" class="btn btn-link">{{username}}</a>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Posting Cerita</button>
+                <a href="/stories/post" class="btn btn-link">Posting Cerita</a>
+                <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Posting Cerita</button> -->
                 <a href="/logout" class="btn btn-link">Logout</a>
               {% endif %}
             </div>
