@@ -145,3 +145,11 @@
     height: 128px;
     border-radius: 50%;
 }
+
+.input-tag{
+    display: flex;
+}
+
+.tags{
+    max-width: 200px;
+}

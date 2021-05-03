@@ -18,13 +18,14 @@
                         <div class="form-group">
                           <input type="text" value="{% if story %} {{story.title}}  {% endif %}" class="form-control" name="title" id="exampleFormControlInput1" placeholder="Judul Cerita">
                         </div>
-                        <div class="form-group" style="max-width: 250px;">
+                        <div id="tag-form-group" class="form-group">
                           <label for="tags">Tags</label>
-                          <div style="display: flex;" class="input-tag">
-                            <input type="text" class="form-control" name="tags" required id="tags" placeholder="Tagar cerita ...">
-                            <button class="btn btn-danger ml-1" id="add-tags"><i class="fas fa-trash"></i>Delete</button>
+                          <div id="input-tag-list">
+                            <div class="input-tag">
+                              <input type="text" class="form-control tags" name="tag-1" placeholder="Tagar cerita ...">
+                            </div>
                           </div>
-                          <button class="btn btn-primary mt-1" id="add-tags">Tambah tag</button>
+                          <button type="button" class="btn btn-primary mt-1" id="add-tag">Tambah tag</button>
                         </div>
                         <div class="form-group">
                           <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="50">
@@ -41,6 +42,39 @@
             </div>
         </div>
     </div>
+    <template id="input-tag-template">
+      <div class="input-tag mt-1">
+        <input type="text" class="form-control tags" name="tag-1" placeholder="Tagar cerita ...">
+        <button type="button" onclick="deleteTag(this)" data-tag="tag-1" class="btn btn-danger ml-1 delete-tag"><i class="fas fa-trash"></i></button>
+      </div>
+    </template>
+    <script>
+      function deleteTag(item){
+        var targetElement = item
+        var deletedElement = document.getElementById(targetElement.getAttribute("data-tag"))
+        deletedElement.parentNode.removeChild(deletedElement);
+      }
+      
+      document.getElementById("add-tag").addEventListener("click", (event)=>{
+        if ('content' in document.createElement('template')) {
+          //clone template
+          var template = document.getElementById("input-tag-template")
+          var clone = template.content.cloneNode(true)
+          
+          //specify the tag number
+          tag_number = document.querySelectorAll('.input-tag').length+1;
+          // clone.id = "tag-"+tag_number
+          // console.log(clone.firstElementChild)
+          clone.firstElementChild.id = "tag-"+tag_number
+
+          //add to containing element
+          var containingElement = document.getElementById("input-tag-list")
+          containingElement.appendChild(clone)
+        }else{
+          //find another way not using template tag
+        }
+      });
+    </script>
 {% endblock %}
 
 {% block title %}
