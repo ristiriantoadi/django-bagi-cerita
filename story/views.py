@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
-from story.models import Story,Comment
+from story.models import Story,Comment,Tag
 from datetime import datetime
 from django.http import Http404
 
@@ -80,6 +80,13 @@ def post_story_view(request):
         user = request.user
         date_posted = datetime.date(datetime.now())
         story = Story.objects.create(title=title,content=content,user=user,date_posted=date_posted)
+        # story.tags.create()
+        tags = request.POST.getlist('tag[]')
+        for tag in tags:
+            name = tag
+            tag_object = Tag.objects.create(name=tag)
+            tag_object.stories.add(story)
+        
         return redirect(f"/stories/{story.id}")
 
     context={
@@ -126,6 +133,7 @@ def get_story(story_id):
     # get story
     try:
         story = Story.objects.get(id=story_id)
+        story.tags = story.tag_set.all()
     except Story.DoesNotExist:
         raise Http404("Story does not exist")
 

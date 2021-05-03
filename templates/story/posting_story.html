@@ -16,23 +16,19 @@
                     <form method="POST">
                         {% csrf_token %}
                         <div class="form-group">
-                          <input type="text" value="{% if story %} {{story.title}}  {% endif %}" class="form-control" name="title" id="exampleFormControlInput1" placeholder="Judul Cerita">
+                          <input required type="text" value="{% if story %} {{story.title}}  {% endif %}" class="form-control" name="title" id="exampleFormControlInput1" placeholder="Judul Cerita">
                         </div>
                         <div id="tag-form-group" class="form-group">
                           <label for="tags">Tags</label>
                           <div id="input-tag-list">
                             <div class="input-tag">
-                              <input type="text" class="form-control tags" name="tag[]" placeholder="Tagar cerita ...">
+                              <input type="text" required class="form-control tags" name="tag[]" placeholder="Tagar cerita ...">
                             </div>
                           </div>
                           <button type="button" class="btn btn-primary mt-1" id="add-tag">Tambah tag</button>
                         </div>
                         <div class="form-group">
-                          <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="50">
-                            {% if story %} 
-                              {{story.content}}  
-                            {% endif %}
-                          </textarea>
+                          <textarea required class="form-control" name="content" id="textarea" rows="50">{% if story %}{{story.content}}{% endif %}</textarea>
                         </div>
                         <div class="form-group" style="text-align: right;">
                           <button type="submit" class="btn btn-primary">Submit</button>
@@ -44,11 +40,12 @@
     </div>
     <template id="input-tag-template">
       <div id="tag-1" class="input-tag mt-1">
-        <input type="text" class="form-control tags" name="tag" placeholder="Tagar cerita ...">
+        <input type="text" class="form-control tags" name="tag[]" placeholder="Tagar cerita ...">
         <button type="button" onclick="deleteTag(this)" data-tag="tag-1" class="btn btn-danger ml-1 delete-tag"><i class="fas fa-trash"></i></button>
       </div>
     </template>
     <script>
+      
       function deleteTag(item){
         var targetElement = item
         var deletedElement = document.getElementById(targetElement.getAttribute("data-tag"))

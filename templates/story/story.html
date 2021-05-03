@@ -12,9 +12,10 @@
                             <div class="story-info mb-5">
                                 <h3 class="card-title">{{story.title}}</h3>
                                 <span class="text-story-info font-weight-light">(3200 kata) by <a href="/user/{{story.user.username}}/profile">{{story.user.username}}</a> on {{story.date_posted}}</span>
-                                <span class="text-story-info tags font-weight-light">Tags: <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
-                                    <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a> 
-                                    | <a href="twitter.com">Cerita</a> | <a href="twitter.com">Cerita Pendek</a> | <a href="twitter.com">Detektif</a>
+                                <span class="text-story-info tags font-weight-light">Tags: 
+                                    {% for tag in  story.tags%}
+                                        <a href="twitter.com">{{tag.name}}</a> |
+                                    {% endfor %}
                                 </span>
                                 {% if request.user.is_authenticated %}
                                     {% if request.user.username == story.user.username %}

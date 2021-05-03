@@ -17,6 +17,7 @@ class Story(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=120,blank=True)
     # how do you implement many to many relationship to story
+    stories = models.ManyToManyField(Story)
 
     def __str__(self):
         return f'{self.name} Tag'
