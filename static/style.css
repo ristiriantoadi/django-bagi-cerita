@@ -151,5 +151,10 @@
 }
 
 .tags{
+    /* max-width: 200px; */
+}
+
+.input-tags{
     max-width: 200px;
 }
+

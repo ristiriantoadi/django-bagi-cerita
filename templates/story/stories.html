@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <h3 class="card-title">All Stories</h3>
                     {% for story in stories %}
-                        {{story|render_story_box}}
+                        {% story_box_tag story %}
                     {% endfor %}
                 </div>
             </div>

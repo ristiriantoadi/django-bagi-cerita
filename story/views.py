@@ -9,11 +9,16 @@ from django.http import Http404
 def home_view(request,*args, **kwargs):
     return redirect("stories")
 
+# get stories
 def stories_view(request):
 
     # get all stories
-    stories = Story.objects.all()
-    stories = calculate_stories_rating(stories)
+    stories = get_stories()
+    # get_story(story.)
+    # stories_returned=[]
+    # for story in stories:
+    #     story = get_story(story.id)
+    # stories = calculate_stories_rating(stories)
 
     context={
         "page":"stories",
@@ -43,6 +48,8 @@ def featured_stories_view(request):
 # get story  / story view
 def story_view(request,story_id):
 
+    story = Story.objects.get(id=story_id)
+
     # add comment or reply
     if(request.method == "POST"):
         rating=0
@@ -50,7 +57,6 @@ def story_view(request,story_id):
             rating = request.POST.get('rating')
         content = request.POST.get('content') 
         user = request.user
-        story = Story.objects.get(id=story_id)
         replied_comment_id = 0
         if(request.POST.get('replied_comment_id')):
             replied_comment_id = int(request.POST.get('replied_comment_id'))
@@ -60,7 +66,7 @@ def story_view(request,story_id):
     context={
         "id":story_id,
         "rating":10,
-        "story":calculate_story_rating(get_story(story_id)),
+        "story":get_story(story),
         "comments":get_comments(story_id),
         "have_commented":"False"
     }
@@ -97,17 +103,28 @@ def post_story_view(request):
 
 # edit story
 def edit_story_view(request,story_id):
+    story = Story.objects.get(id=story_id)
     if(request.method == "POST"):
-        story = Story.objects.get(id=story_id)
         story.title = request.POST.get('title')
         story.content = request.POST.get('content')
+        story.tag_set.clear()
         story.save()
+
+        tags = request.POST.getlist('tag[]')
+        for tag in tags:
+            name = tag
+            try:
+                tag_object = Tag.objects.get(name=name)
+            except Tag.DoesNotExist:
+                tag_object = Tag.objects.create(name=name)
+            tag_object.stories.add(story)
+                
         return redirect(f"/stories/{story.id}")
 
     context={
         "id":story_id,
         "rating":10,
-        "story":get_story(story_id),
+        "story":get_story(story),
         "page":"edit_story"
     }
     return render(request,"story/posting_story.html",context)
@@ -129,14 +146,26 @@ def add_comment_view(request,story_id):
 
 
 # helper functions
-def get_story(story_id):
-    # get story
-    try:
-        story = Story.objects.get(id=story_id)
-        story.tags = story.tag_set.all()
-    except Story.DoesNotExist:
-        raise Http404("Story does not exist")
+def get_stories():
+    stories = Story.objects.all()
+    returned_stories=[]
+    for story in stories:
+        story = get_story(story)
+        returned_stories.append(story)
+    return returned_stories
 
+def get_story(story):
+    # get story
+    # try:
+    #     # story = Story.objects.get(id=story_id)
+    #     story.tags = story.tag_set.all()
+    #     story = calculate_story_rating(story)
+    # except Story.DoesNotExist:
+    #     raise Http404("Story does not exist")
+
+    # get the tags and the rating
+    story.tags = story.tag_set.all()
+    story = calculate_story_rating(story)
     return story
 
 def get_comments(story_id):

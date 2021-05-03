@@ -38,7 +38,7 @@
                     </div>
                     <h4 class="card-title">Cerita</h4>
                     {% for story in stories %}
-                        {{story|render_story_box}}
+                        {% story_box_tag story %}
                     {% endfor %}
                 </div>
             </div>

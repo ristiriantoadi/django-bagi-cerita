@@ -21,9 +21,18 @@
                         <div id="tag-form-group" class="form-group">
                           <label for="tags">Tags</label>
                           <div id="input-tag-list">
-                            <div class="input-tag">
-                              <input type="text" required class="form-control tags" name="tag[]" placeholder="Tagar cerita ...">
-                            </div>
+                            {% if story %}
+                              {%for tag in story.tags%}
+                                <div id="tag-{{forloop.counter}}" class="input-tag mt-1">
+                                  <input required type="text" class="form-control input-tags" value="{{tag.name}}" name="tag[]" placeholder="Tagar cerita ...">
+                                  <button type="button" onclick="deleteTag(this)" data-tag="tag-{{forloop.counter}}" class="btn btn-danger ml-1 delete-tag"><i class="fas fa-trash"></i></button>
+                                </div>
+                              {%endfor%}
+                            {%else %} 
+                              <div class="input-tag">
+                                <input type="text" required class="form-control input-tags" name="tag[]" placeholder="Tagar cerita ...">
+                              </div>
+                            {% endif %}
                           </div>
                           <button type="button" class="btn btn-primary mt-1" id="add-tag">Tambah tag</button>
                         </div>
@@ -40,7 +49,7 @@
     </div>
     <template id="input-tag-template">
       <div id="tag-1" class="input-tag mt-1">
-        <input type="text" class="form-control tags" name="tag[]" placeholder="Tagar cerita ...">
+        <input required type="text" class="form-control input-tags" name="tag[]" placeholder="Tagar cerita ...">
         <button type="button" onclick="deleteTag(this)" data-tag="tag-1" class="btn btn-danger ml-1 delete-tag"><i class="fas fa-trash"></i></button>
       </div>
     </template>
@@ -62,8 +71,7 @@
           tag_number = "tag-"+(document.querySelectorAll('.input-tag').length+1);
           containingDiv = clone.firstElementChild
           containingDiv.id = tag_number
-          clone.querySelectorAll(".tags")[0].id = tag_number;
-          // clone.querySelectorAll(".tags")[0].name = tag_number;
+          clone.querySelectorAll(".input-tags")[0].id = tag_number;
           clone.querySelectorAll(".btn")[0].dataset.tag = tag_number;
 
           //add to containing element

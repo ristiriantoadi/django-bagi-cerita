@@ -3,7 +3,7 @@ from django.http import HttpResponseNotFound, Http404, HttpResponse
 from django.contrib.auth.models import User
 from user.models import Profile
 from django.contrib.auth import authenticate, login,logout
-from story.views import calculate_stories_rating, calculate_story_rating
+from story.views import calculate_stories_rating, calculate_story_rating,get_stories
 
 # Create your views here.
 def login_view(request,*args, **kwargs):
@@ -44,6 +44,7 @@ def logout_view(request,*args, **kwargs):
     next_url = request.GET['next']
     return redirect(next_url)
 
+# get user profile / get profile
 def user_profile_view(request,username):
     user = User.objects.filter(username=username).first()
     context = {
@@ -69,9 +70,9 @@ def user_profile_view(request,username):
         pass
 
     # get user stories
-    stories=user.story_set.all()
-    stories = calculate_stories_rating(stories)
-    context['stories'] = stories
+    # stories=user.story_set.all()
+    # stories = calculate_stories_rating(stories)
+    context['stories'] = get_stories()
 
     return render(request,"user/user_profile.html",context)
 
