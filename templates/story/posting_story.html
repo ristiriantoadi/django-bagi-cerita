@@ -62,10 +62,13 @@
           var clone = template.content.cloneNode(true)
           
           //specify the tag number
-          tag_number = document.querySelectorAll('.input-tag').length+1;
-          // clone.id = "tag-"+tag_number
-          // console.log(clone.firstElementChild)
-          clone.firstElementChild.id = "tag-"+tag_number
+          tag_number = "tag-"+(document.querySelectorAll('.input-tag').length+1);
+          containingDiv = clone.firstElementChild
+          containingDiv.id = tag_number
+          clone.querySelectorAll(".tags")[0].id = tag_number;
+          clone.querySelectorAll(".tags")[0].name = tag_number;
+          clone.querySelectorAll(".btn")[0].dataTag = tag_number;
+          
 
           //add to containing element
           var containingElement = document.getElementById("input-tag-list")
