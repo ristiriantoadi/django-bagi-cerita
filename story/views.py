@@ -87,11 +87,14 @@ def post_story_view(request):
         date_posted = datetime.date(datetime.now())
         story = Story.objects.create(title=title,content=content,user=user,date_posted=date_posted)
         # story.tags.create()
-        tags = request.POST.getlist('tag[]')
-        for tag in tags:
-            name = tag
-            tag_object = Tag.objects.create(name=tag)
-            tag_object.stories.add(story)
+        
+        story_add_tags(request.POST.getlist('tag[]'), story)
+
+        # tags = request.POST.getlist('tag[]')
+        # for tag in tags:
+        #     name = tag
+        #     tag_object = Tag.objects.create(name=tag)
+        #     tag_object.stories.add(story)
         
         return redirect(f"/stories/{story.id}")
 
@@ -110,14 +113,15 @@ def edit_story_view(request,story_id):
         story.tag_set.clear()
         story.save()
 
-        tags = request.POST.getlist('tag[]')
-        for tag in tags:
-            name = tag
-            try:
-                tag_object = Tag.objects.get(name=name)
-            except Tag.DoesNotExist:
-                tag_object = Tag.objects.create(name=name)
-            tag_object.stories.add(story)
+        story_add_tags(request.POST.getlist('tag[]'), story)
+        # tags = request.POST.getlist('tag[]')
+        # for tag in tags:
+        #     name = tag
+        #     try:
+        #         tag_object = Tag.objects.get(name=name)
+        #     except Tag.DoesNotExist:
+        #         tag_object = Tag.objects.create(name=name)
+        #     tag_object.stories.add(story)
                 
         return redirect(f"/stories/{story.id}")
 
@@ -155,14 +159,6 @@ def get_stories():
     return returned_stories
 
 def get_story(story):
-    # get story
-    # try:
-    #     # story = Story.objects.get(id=story_id)
-    #     story.tags = story.tag_set.all()
-    #     story = calculate_story_rating(story)
-    # except Story.DoesNotExist:
-    #     raise Http404("Story does not exist")
-
     # get the tags and the rating
     story.tags = story.tag_set.all()
     story = calculate_story_rating(story)
@@ -201,3 +197,12 @@ def calculate_story_rating(story):
         story_rating+=comment.rating
     story.rating = story_rating
     return story
+
+def story_add_tags(tags,story):
+    for tag in tags:
+        name = tag
+        try:
+            tag_object = Tag.objects.get(name=name)
+        except Tag.DoesNotExist:
+            tag_object = Tag.objects.create(name=name)
+        tag_object.stories.add(story)

@@ -51,6 +51,7 @@ def reply_tag(comment,request):
 def story_box_tag(story):
     return {'story':story}
 
+
 # @register.filter(name="render_comment")
 # def render_comment(comment,args):
 #     comment_html= f"""  <div class="comment mb-2">

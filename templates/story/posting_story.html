@@ -29,9 +29,7 @@
                                 </div>
                               {%endfor%}
                             {%else %} 
-                              <div class="input-tag">
-                                <input type="text" required class="form-control input-tags" name="tag[]" placeholder="Tagar cerita ...">
-                              </div>
+                              {% include 'input_tag_first.html' %}
                             {% endif %}
                           </div>
                           <button type="button" class="btn btn-primary mt-1" id="add-tag">Tambah tag</button>
@@ -53,12 +51,38 @@
         <button type="button" onclick="deleteTag(this)" data-tag="tag-1" class="btn btn-danger ml-1 delete-tag"><i class="fas fa-trash"></i></button>
       </div>
     </template>
+    <template id="input-tag-template-first">
+      {% include 'input_tag_first.html' %}
+    </template>
     <script>
-      
+      function renderFirstTagInput(){
+        if ('content' in document.createElement('template')) {
+            //clone template
+            var template = document.getElementById("input-tag-template-first")
+            var clone = template.content.cloneNode(true)
+            
+            //add to containing element
+            var containingElement = document.getElementById("input-tag-list")
+            containingElement.appendChild(clone)
+          }else{
+            //find another way not using template tag
+          }
+      }
+
+      function countTags(){
+        return document.querySelectorAll('.input-tag').length;
+      }
+
       function deleteTag(item){
         var targetElement = item
         var deletedElement = document.getElementById(targetElement.getAttribute("data-tag"))
         deletedElement.parentNode.removeChild(deletedElement);
+        
+        //count the tags
+        var tags = countTags()
+        if(tags == 0){
+          renderFirstTagInput()
+        }
       }
       
       document.getElementById("add-tag").addEventListener("click", (event)=>{
@@ -68,7 +92,7 @@
           var clone = template.content.cloneNode(true)
           
           //specify the tag number
-          tag_number = "tag-"+(document.querySelectorAll('.input-tag').length+1);
+          tag_number = "tag-"+(countTags()+1);
           containingDiv = clone.firstElementChild
           containingDiv.id = tag_number
           clone.querySelectorAll(".input-tags")[0].id = tag_number;
