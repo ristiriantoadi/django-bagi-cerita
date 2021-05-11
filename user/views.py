@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseNotFound, Http404, HttpResponse
 from django.contrib.auth.models import User
 from user.models import Profile
+from story.models import Comment
 from django.contrib.auth import authenticate, login,logout
 from story.views import calculate_stories_rating, calculate_story_rating,get_stories
 
@@ -55,7 +56,8 @@ def user_profile_view(request,username):
         "kota":"-",
         "tentang_saya":"-",
         "page":"profil",
-        "username":username
+        "username":username,
+        "poin":0
     }
     try:
         profile = user.profile
@@ -64,14 +66,13 @@ def user_profile_view(request,username):
         context['gender'] = profile.gender
         context['kota'] = profile.kota
         context['tentang_saya'] = profile.tentang_saya
+        context["poin"] = get_points(user)
         if(profile.profile_picture):
             context["img"] = profile.profile_picture
     except Profile.DoesNotExist:
         pass
 
     # get user stories
-    # stories=user.story_set.all()
-    # stories = calculate_stories_rating(stories)
     context['stories'] = get_stories(user)
 
     return render(request,"user/user_profile.html",context)
@@ -133,3 +134,6 @@ def notifikasi_view(request,username):
         "username":username
     }
     return render(request,"user/notifikasi.html",context)
+
+def get_points(user):
+    return len(Comment.objects.filter(user=user,replied_comment_id=0))*5
