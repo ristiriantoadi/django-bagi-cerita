@@ -10,20 +10,31 @@ def home_view(request,*args, **kwargs):
     return redirect("stories")
 
 # get stories
+# search = {"search_by":"tag","key":"something"} or {"search_by":"judul","key":"something"}
 def stories_view(request):
 
+    
+    context={
+        "page":"stories"
+    }
+    
     # get all stories
     stories = get_stories()
-    # get_story(story.)
-    # stories_returned=[]
-    # for story in stories:
-    #     story = get_story(story.id)
-    # stories = calculate_stories_rating(stories)
 
-    context={
-        "page":"stories",
-        "stories": stories
-    }
+    # filter by tag
+    if(request.GET.get('tag')):
+        tag = request.GET.get('tag')
+        stories = get_stories(search={"search_by":"tag","key":tag})
+        context["page"] = "search-by-tag"
+        context["tag"] = tag
+    #filter by judul
+    elif(request.GET.get("judul")):
+        judul = request.GET.get("judul")
+        stories = get_stories(search={"search_by":"judul","key":judul})
+        context["page"] = "search-by-judul"
+        context["judul"] = judul
+    
+    context["stories"] = stories
 
     return render(request,"story/stories.html",context)
 
@@ -144,25 +155,46 @@ def add_comment_view(request,story_id):
 
 
 # helper functions
-def get_stories(user=None,category="all"):
+def get_stories(user=None,category="all",search=None):
+
+    # search = {"search_by":"tag","key":"something"} or {"search_by":"judul","key":"something"}
+
     if(user):
         stories = Story.objects.filter(user=user)
     else:
         stories = Story.objects.all()
+        
+        # filter stories by judul
+        # if(search):
+        #     if(search["search_by"] == "judul"):
+        #         stories = Story.objects.filter(title=search["key"])
+        #         print("stories by judul: "+str(stories))
     returned_stories=[]
     for story in stories:
         story = get_story(story)
-        if(category == "all"):
-            returned_stories.append(story)
-        elif(category == "popular"):
-            if(story.rating >= 35 and story.rating <=50):
+
+        # filter stories by tag or judul
+        if(search):
+            if(search["search_by"] == "tag"):
+                if len(story.tag_set.filter(name=search["key"])) != 0:
+                    returned_stories.append(story)
+            else:
+                # if story.title == search["key"]
+                if search["key"].lower() in story.title.lower():
+                    returned_stories.append(story)
+        else:        
+            # filter stories by category
+            if(category == "all"):
                 returned_stories.append(story)
-        elif(category=="best"):
-            if(story.rating >= 51 and story.rating <=100):
-                returned_stories.append(story)
-        else:
-            if(story.rating>100):
-                returned_stories.append(story)
+            elif(category == "popular"):
+                if(story.rating >= 35 and story.rating <=50):
+                    returned_stories.append(story)
+            elif(category=="best"):
+                if(story.rating >= 51 and story.rating <=100):
+                    returned_stories.append(story)
+            else:
+                if(story.rating>100):
+                    returned_stories.append(story)
     return returned_stories
 
 def get_story(story):

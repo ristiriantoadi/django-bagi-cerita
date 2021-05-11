@@ -39,6 +39,10 @@
                             Popular Stories
                         {%elif page == "best" %}
                             Best Stories
+                        {%elif page == "search-by-tag" %}
+                            Tag: {{tag}}
+                        {%elif page == "search-by-judul" %}
+                            Judul: {{judul}}
                         {%else %}
                             Featured Stories
                         {% endif %}

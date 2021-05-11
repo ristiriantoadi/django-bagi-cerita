@@ -8,7 +8,7 @@
         <span class="text-story-info text font-weight-light">(3200 kata) by <a href="/user/{{story.user.username}}/profile">{{story.user.username}}</a> on {{story.date_posted}}</span>
         <span class="text-story-info text tags font-weight-light">Tags: 
             {% for tag in  story.tags%}
-                <a href="twitter.com">{{tag.name}}</a> |
+                <a href="/stories?tag={{tag.name}}">{{tag.name}}</a> |
             {% endfor %}
         </span>
     </div>
