@@ -20,7 +20,9 @@
                                 {% if request.user.is_authenticated %}
                                     {% if request.user.username == story.user.username %}
                                         <span class="text-story-info button-story font-weight-light"><a href="/stories/{{story.id}}/edit">Edit Cerita</a></span>
-                                        <span class="text-story-info button-story font-weight-light"><a href="/stories/{{story.id}}/delete">Hapus Cerita</a></span>
+                                        <span class="text-story-info button-story font-weight-light"><a href="/stories/{{story.id}}/delete" onclick="deleteStory(event)">Hapus Cerita</a></span>
+                                        <!-- <span class="text-story-info button-story font-weight-light"><a onclick="deleteStory()" href="/stories/{{story.id}}/delete">Hapus Cerita</a></span> -->
+                                        <!-- <button class="text-story-info button-story font-weight-light">Hapus Cerita</button> -->
                                     {% endif %}
                                 {% endif %}
                             </div>
@@ -73,6 +75,14 @@
             </div>
         </div>
     </div>
+    <script>
+        function deleteStory(event){
+            if(confirm("Hapus cerita?")){
+                return true;
+            }
+            event.preventDefault()
+        }
+    </script>
 {% endblock %}
 
 {% block title %}
