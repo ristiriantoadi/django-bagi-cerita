@@ -56,7 +56,8 @@ def user_profile_view(request,username):
         "kota":"-",
         "tentang_saya":"-",
         "page":"profil",
-        "username":username,
+        # "username":username,
+        "user":user,
         "poin":0
     }
     try:
