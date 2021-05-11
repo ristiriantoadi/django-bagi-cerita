@@ -86,16 +86,9 @@ def post_story_view(request):
         user = request.user
         date_posted = datetime.date(datetime.now())
         story = Story.objects.create(title=title,content=content,user=user,date_posted=date_posted)
-        # story.tags.create()
         
         story_add_tags(request.POST.getlist('tag[]'), story)
 
-        # tags = request.POST.getlist('tag[]')
-        # for tag in tags:
-        #     name = tag
-        #     tag_object = Tag.objects.create(name=tag)
-        #     tag_object.stories.add(story)
-        
         return redirect(f"/stories/{story.id}")
 
     context={
@@ -114,14 +107,6 @@ def edit_story_view(request,story_id):
         story.save()
 
         story_add_tags(request.POST.getlist('tag[]'), story)
-        # tags = request.POST.getlist('tag[]')
-        # for tag in tags:
-        #     name = tag
-        #     try:
-        #         tag_object = Tag.objects.get(name=name)
-        #     except Tag.DoesNotExist:
-        #         tag_object = Tag.objects.create(name=name)
-        #     tag_object.stories.add(story)
                 
         return redirect(f"/stories/{story.id}")
 
@@ -150,8 +135,11 @@ def add_comment_view(request,story_id):
 
 
 # helper functions
-def get_stories():
-    stories = Story.objects.all()
+def get_stories(user=None):
+    if(user):
+        stories = Story.objects.filter(user=user)
+    else:
+        stories = Story.objects.all()
     returned_stories=[]
     for story in stories:
         story = get_story(story)

@@ -72,7 +72,7 @@ def user_profile_view(request,username):
     # get user stories
     # stories=user.story_set.all()
     # stories = calculate_stories_rating(stories)
-    context['stories'] = get_stories()
+    context['stories'] = get_stories(user)
 
     return render(request,"user/user_profile.html",context)
 
