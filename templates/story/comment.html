@@ -1,10 +1,15 @@
 {% load story_tags %}
-<div class="comment mb-2">
+<div class="{% if comment.replied_comment_id != 0 %} ml-5 {% endif %} comment mb-2">
     <h6 class="user font-weight-bold">{{comment.user.username}}</h6>
     <span class="date font-weight-light">(26-08-2020)</span>
-    <span class="rating">
+    {% if comment.replied_comment_id == 0 %}
+        <span class="rating">
+            {{ comment.rating | render_rating }}
+        </span>
+    {% endif %}
+    <!-- <span class="rating">
         {{ comment.rating | render_rating }}
-    </span>
+    </span> -->
     <p class="content">{{comment.content}}</p>
     <div class="login-to-comment">
         {% if request.user.is_authenticated %}
@@ -13,7 +18,7 @@
             <form method="POST" class="reply-box" id="reply-box-{{comment.id}}">
                 {% csrf_token %}
                 <div class="form-group no-gutters">
-                    <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea required class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <div class="container-button-submit">
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -27,6 +32,6 @@
     </div>
     <!-- the replies live here-->
     {% for reply in comment.replies %}
-        {% reply_tag reply request %}
+        {% comment_tag reply request %}
     {% endfor %}
 </div>

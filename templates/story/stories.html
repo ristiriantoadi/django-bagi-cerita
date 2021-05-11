@@ -32,7 +32,17 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h3 class="card-title">All Stories</h3>
+                    <h3 class="card-title">
+                        {%if page == "stories" %}
+                            All Stories
+                        {%elif page == "popular" %}
+                            Popular Stories
+                        {%elif page == "best" %}
+                            Best Stories
+                        {%else %}
+                            Featured Stories
+                        {% endif %}
+                    </h3>
                     {% for story in stories %}
                         {% story_box_tag story %}
                     {% endfor %}

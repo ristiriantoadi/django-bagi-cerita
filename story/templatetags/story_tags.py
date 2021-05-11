@@ -11,7 +11,7 @@ def render_rating(rating):
         if(rating_counter>=rating):
            rating_html+="<span class='fa fa-star'></span>"
         elif(rating_counter+2>rating):
-            rating_html+="<span class='fa fa-star-half-o checked'></span>"
+            rating_html+="<span class='fas fa-star-half-alt checked'></span>"
             rating_counter+=1
         # elif(rating_counter + 2 <= rating):
         else:

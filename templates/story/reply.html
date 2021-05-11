@@ -10,7 +10,7 @@
         <form method="POST" class="reply-box" id="reply-box-{{comment.id}}">
             {% csrf_token %}
             <div class="form-group no-gutters">
-                <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea required class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
             <div class="container-button-submit">
                 <button type="submit" class="btn btn-primary">Submit</button>

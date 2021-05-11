@@ -27,21 +27,28 @@ def stories_view(request):
 
     return render(request,"story/stories.html",context)
 
+# get popular stories
 def popular_stories_view(request):
     context={
-        "page":"popular"
+        "page":"popular",
+        "stories": get_stories(category="popular")
+    }
+    print("stories: "+str(context["stories"]))
+    return render(request,"story/stories.html",context)
+
+# get best stories
+def best_stories_view(request):
+    context={
+        "page":"best",
+        "stories": get_stories(category="best")
     }
     return render(request,"story/stories.html",context)
 
-def best_stories_view(request):
-    context={
-        "page":"best"
-    }
-    return render(request,"story/stories.html",context)
-    
+# get featured stories    
 def featured_stories_view(request):
     context={
-        "page":"featured"
+        "page":"featured",
+        "stories": get_stories(category="featured")
     }
     return render(request,"story/stories.html",context)
 
@@ -135,7 +142,7 @@ def add_comment_view(request,story_id):
 
 
 # helper functions
-def get_stories(user=None):
+def get_stories(user=None,category="all"):
     if(user):
         stories = Story.objects.filter(user=user)
     else:
@@ -143,7 +150,17 @@ def get_stories(user=None):
     returned_stories=[]
     for story in stories:
         story = get_story(story)
-        returned_stories.append(story)
+        if(category == "all"):
+            returned_stories.append(story)
+        elif(category == "popular"):
+            if(story.rating >= 35 and story.rating <=50):
+                returned_stories.append(story)
+        elif(category=="best"):
+            if(story.rating >= 51 and story.rating <=100):
+                returned_stories.append(story)
+        else:
+            if(story.rating>100):
+                returned_stories.append(story)
     return returned_stories
 
 def get_story(story):

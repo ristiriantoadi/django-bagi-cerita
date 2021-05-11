@@ -5,7 +5,7 @@
     </div>
     <div class="info">
         <h5 class="mb-0"><a href="/stories/{{story.id}}">{{story.title}}</a></h5>
-        <span class="text-story-info text font-weight-light">(3200 kata) by <a href="/user/{story.user.username}/profile">{{story.user.username}}</a> on {{story.date_posted}}</span>
+        <span class="text-story-info text font-weight-light">(3200 kata) by <a href="/user/{{story.user.username}}/profile">{{story.user.username}}</a> on {{story.date_posted}}</span>
         <span class="text-story-info text tags font-weight-light">Tags: 
             {% for tag in  story.tags%}
                 <a href="twitter.com">{{tag.name}}</a> |
