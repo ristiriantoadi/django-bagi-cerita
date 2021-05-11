@@ -100,7 +100,8 @@ def post_story_view(request):
 
     context={
         "rating":10,                
-        "page":"post_story"
+        "page":"post_story",
+        "tags":get_all_tags()
     }
     return render(request,"story/posting_story.html",context)
 
@@ -121,7 +122,8 @@ def edit_story_view(request,story_id):
         "id":story_id,
         "rating":10,
         "story":get_story(story),
-        "page":"edit_story"
+        "page":"edit_story",
+        "tags":get_all_tags()
     }
     return render(request,"story/posting_story.html",context)
 
@@ -211,3 +213,6 @@ def story_add_tags(tags,story):
         except Tag.DoesNotExist:
             tag_object = Tag.objects.create(name=name)
         tag_object.stories.add(story)
+
+def get_all_tags():
+    return Tag.objects.all()

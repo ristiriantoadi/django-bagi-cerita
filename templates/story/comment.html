@@ -34,4 +34,10 @@
     {% for reply in comment.replies %}
         {% comment_tag reply request %}
     {% endfor %}
+    <script>
+        function showReplyBox(item) {
+            var replyBoxId = item.getAttribute("data-target");
+            document.getElementById(replyBoxId).classList.toggle("visible");
+        }
+    </script>
 </div>

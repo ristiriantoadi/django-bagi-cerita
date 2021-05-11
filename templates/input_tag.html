@@ -1,0 +1,14 @@
+<div class="input-tag">
+    <input type="text" {% if forloop.counter %} list="tag-input-{{forloop.counter}}" {% else %} list="tag-input-1"  {% endif %} required class="form-control input-tags" {% if tag %} value="{{tag.name}}" {% endif %} name="tag[]" placeholder="Tagar cerita ...">
+    <datalist  {% if forloop.counter %} id="tag-input-{{forloop.counter}}" {% else %} id="tag-input-1"  {% endif %}>
+      {% for tag in tags %}
+        <option value="{{tag.name}}">
+      {% endfor %}
+      <!-- <option value="Chrome">
+      <option value="Firefox">
+      <option value="Internet Explorer">
+      <option value="Opera">
+      <option value="Safari">
+      <option value="Microsoft Edge"> -->
+    </datalist>
+  </div>

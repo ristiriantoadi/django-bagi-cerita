@@ -24,12 +24,13 @@
                             {% if story %}
                               {%for tag in story.tags%}
                                 <div id="tag-{{forloop.counter}}" class="input-tag mt-1">
-                                  <input required type="text" class="form-control input-tags" value="{{tag.name}}" name="tag[]" placeholder="Tagar cerita ...">
+                                  <!-- <input required type="text" class="form-control input-tags" value="{{tag.name}}" name="tag[]" placeholder="Tagar cerita ..."> -->
+                                  {% include 'input_tag.html' %}
                                   <button type="button" onclick="deleteTag(this)" data-tag="tag-{{forloop.counter}}" class="btn btn-danger ml-1 delete-tag"><i class="fas fa-trash"></i></button>
                                 </div>
                               {%endfor%}
                             {%else %} 
-                              {% include 'input_tag_first.html' %}
+                              {% include 'input_tag.html' %}
                             {% endif %}
                           </div>
                           <button type="button" class="btn btn-primary mt-1" id="add-tag">Tambah tag</button>
@@ -47,12 +48,13 @@
     </div>
     <template id="input-tag-template">
       <div id="tag-1" class="input-tag mt-1">
-        <input required type="text" class="form-control input-tags" name="tag[]" placeholder="Tagar cerita ...">
+        <!-- <input required type="text" class="form-control input-tags" name="tag[]" placeholder="Tagar cerita ..."> -->
+        {% include 'input_tag.html' %}
         <button type="button" onclick="deleteTag(this)" data-tag="tag-1" class="btn btn-danger ml-1 delete-tag"><i class="fas fa-trash"></i></button>
       </div>
     </template>
     <template id="input-tag-template-first">
-      {% include 'input_tag_first.html' %}
+      {% include 'input_tag.html' %}
     </template>
     <script>
       function renderFirstTagInput(){
