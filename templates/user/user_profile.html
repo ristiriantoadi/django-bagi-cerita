@@ -44,6 +44,15 @@
                     {% for story in stories %}
                         {% story_box_tag story %}
                     {% endfor %}
+                    {% if stories.len != 0 %}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination pagination-lg">
+                                {% for num in stories.paginator.page_range %}
+                                <li class="page-item {% if stories.number == num %} active {% endif %}"><a class="page-link" href="/user/{{user.username}}/profile?page={{num}}">{{num}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    {% endif %}
                 </div>
             </div>
         </div>

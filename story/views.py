@@ -121,7 +121,8 @@ def post_story_view(request):
         title = request.POST.get('title')
         content = request.POST.get('content')
         user = request.user
-        date_posted = datetime.date(datetime.now())
+        # date_posted = datetime.datetime(datetime.now())
+        date_posted = datetime.now()
         story = Story.objects.create(title=title,content=content,user=user,date_posted=date_posted)
         story_add_tags(request.POST.getlist('tag[]'), story)
 

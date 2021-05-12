@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from user.models import Profile
 from story.models import Comment
 from django.contrib.auth import authenticate, login,logout
-from bagicerita.helpers import get_stories,get_points
+from bagicerita.helpers import get_stories,get_points,pagination
 
 # Create your views here.
 def login_view(request,*args, **kwargs):
@@ -74,7 +74,9 @@ def user_profile_view(request,username):
         pass
 
     # get user stories
-    context['stories'] = get_stories(user)
+    stories = get_stories(user)
+    stories = pagination(stories, request)
+    context['stories'] = stories
 
     return render(request,"user/user_profile.html",context)
 
