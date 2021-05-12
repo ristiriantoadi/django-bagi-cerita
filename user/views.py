@@ -45,7 +45,7 @@ def logout_view(request,*args, **kwargs):
     next_url = request.GET['next']
     return redirect(next_url)
 
-# get user profile / get profile
+# get user profile / get profile / profile page
 def user_profile_view(request,username):
     user = User.objects.filter(username=username).first()
     context = {
@@ -67,7 +67,7 @@ def user_profile_view(request,username):
         context['gender'] = profile.gender
         context['kota'] = profile.kota
         context['tentang_saya'] = profile.tentang_saya
-        context["poin"] = get_points(user)
+        context["poin"] = profile.points
         if(profile.profile_picture):
             context["img"] = profile.profile_picture
     except Profile.DoesNotExist:
