@@ -1,4 +1,5 @@
 from story.models import Story,Comment,Tag
+from django.core.paginator import Paginator
 
 def get_points(user):
     return len(Comment.objects.filter(user=user,replied_comment_id=0))*5
@@ -96,3 +97,11 @@ def story_add_tags(tags,story):
 
 def get_all_tags():
     return Tag.objects.all()
+
+def pagination(stories,request):
+    paginator = Paginator(stories, 5)
+    page=1
+    if(request.GET.get("page")):
+        page = request.GET.get("page")
+    stories = paginator.get_page(page)
+    return stories

@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from story.models import Story,Comment,Tag
-from bagicerita.helpers import get_points,get_stories,get_story,get_comments,get_all_tags,story_add_tags
+from bagicerita.helpers import get_points,get_stories,get_story,get_comments,get_all_tags,story_add_tags,pagination
 from datetime import datetime
 from django.http import Http404
 
@@ -13,8 +13,6 @@ def home_view(request,*args, **kwargs):
 # get stories
 # search = {"search_by":"tag","key":"something"} or {"search_by":"judul","key":"something"}
 def stories_view(request):
-
-    
     context={
         "page":"stories"
     }
@@ -35,32 +33,45 @@ def stories_view(request):
         context["page"] = "search-by-judul"
         context["judul"] = judul
     
+    # pagination
+    stories = pagination(stories, request)
+
     context["stories"] = stories
 
     return render(request,"story/stories.html",context)
 
 # get popular stories
 def popular_stories_view(request):
+    stories = get_stories(category="popular")
+    stories = pagination(stories, request)
     context={
         "page":"popular",
-        "stories": get_stories(category="popular")
+        "stories": stories
     }
     print("stories: "+str(context["stories"]))
     return render(request,"story/stories.html",context)
 
 # get best stories
 def best_stories_view(request):
+    stories = get_stories(category="best")
+    stories = pagination(stories, request)
     context={
         "page":"best",
-        "stories": get_stories(category="best")
+        "stories": stories
     }
     return render(request,"story/stories.html",context)
 
 # get featured stories    
 def featured_stories_view(request):
+    # context={
+    #     "page":"featured",
+    #     "stories": get_stories(category="featured")
+    # }
+    stories = get_stories(category="featured")
+    stories = pagination(stories, request)
     context={
-        "page":"featured",
-        "stories": get_stories(category="featured")
+        "page":"best",
+        "stories": stories
     }
     return render(request,"story/stories.html",context)
 
