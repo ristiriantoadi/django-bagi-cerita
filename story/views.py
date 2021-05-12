@@ -105,13 +105,18 @@ def post_story_view(request):
         user = request.user
         date_posted = datetime.date(datetime.now())
         story = Story.objects.create(title=title,content=content,user=user,date_posted=date_posted)
-        
         story_add_tags(request.POST.getlist('tag[]'), story)
+
+        # minus 20 points
+        profile = user.profile
+        profile.points -=20
+        profile.save()
+        
 
         return redirect(f"/stories/{story.id}")
 
     context={
-        "rating":get_points(request.user),                
+        "rating":request.user.profile.points,                
         "page":"post_story",
         "tags":get_all_tags()
     }
