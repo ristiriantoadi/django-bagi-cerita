@@ -137,6 +137,3 @@ def notifikasi_view(request,username):
     return render(request,"user/notifikasi.html",context)
 
 # get rating / get points
-
-# def get_points(user):
-#     return len(Comment.objects.filter(user=user,replied_comment_id=0))*5
