@@ -104,4 +104,6 @@ def pagination(stories,request):
     if(request.GET.get("page")):
         page = request.GET.get("page")
     stories = paginator.get_page(page)
+    # print("length: "+str(len(stories)))
+    stories.len = len(stories)
     return stories

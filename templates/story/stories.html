@@ -50,6 +50,27 @@
                     {% for story in stories %}
                         {% story_box_tag story %}
                     {% endfor %}
+                    {% if stories.len != 0 %}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination pagination-lg">
+                                {% for num in stories.paginator.page_range %}
+                                    {% if page == "stories" %}
+                                        <li class="page-item {% if stories.number == num %} active {% endif %}"><a class="page-link" href="/stories?page={{num}}">{{num}}</a></li>
+                                    {% elif page == "popular" %}
+                                        <li class="page-item {% if stories.number == num %} active {% endif %}"><a class="page-link" href="/stories/popular?page={{num}}">{{num}}</a></li>
+                                    {% elif page == "best" %}
+                                        <li class="page-item {% if stories.number == num %} active {% endif %}"><a class="page-link" href="/stories/best?page={{num}}">{{num}}</a></li>
+                                    {% elif page == "featured" %}
+                                        <li class="page-item {% if stories.number == num %} active {% endif %}"><a class="page-link" href="/stories/featured?page={{num}}">{{num}}</a></li>
+                                    {% elif page == "search-by-judul" %}
+                                        <li class="page-item {% if stories.number == num %} active {% endif %}"><a class="page-link" href="/stories?judul={{judul}}&page={{num}}">{{num}}</a></li>
+                                    {% elif page == "search-by-tag" %}
+                                        <li class="page-item {% if stories.number == num %} active {% endif %}"><a class="page-link" href="/stories?tag={{tag}}&page={{num}}">{{num}}</a></li>
+                                    {%endif %}
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    {% endif %}
                 </div>
             </div>
         </div>
