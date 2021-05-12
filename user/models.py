@@ -9,6 +9,7 @@ class Profile(models.Model):
     kota = models.CharField(max_length=30, blank=True)
     tentang_saya = models.TextField(blank=True)
     profile_picture = models.ImageField(upload_to='profile_picture',blank=True)
+    points = models.IntegerField(default=20)
 
     # gender field configurations
     Laki = 'L'

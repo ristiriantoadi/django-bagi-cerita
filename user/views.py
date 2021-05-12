@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from user.models import Profile
 from story.models import Comment
 from django.contrib.auth import authenticate, login,logout
-from story.views import calculate_stories_rating, calculate_story_rating,get_stories
+from bagicerita.helpers import get_stories,get_points
 
 # Create your views here.
 def login_view(request,*args, **kwargs):
@@ -136,5 +136,7 @@ def notifikasi_view(request,username):
     }
     return render(request,"user/notifikasi.html",context)
 
-def get_points(user):
-    return len(Comment.objects.filter(user=user,replied_comment_id=0))*5
+# get rating / get points
+
+# def get_points(user):
+#     return len(Comment.objects.filter(user=user,replied_comment_id=0))*5
