@@ -88,6 +88,14 @@ def calculate_story_rating(story):
     story.rating = story_rating
     return story
 
+def count_words(content):
+    words_count=0
+    if content != '':
+        # splitting the text and taking lenght
+        # of that
+        words_count = len(content.split())    
+    return words_count
+
 def story_add_tags(tags,story):
     for tag in tags:
         name = tag

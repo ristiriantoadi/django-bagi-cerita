@@ -11,7 +11,7 @@
                         <div class="story-info-container">
                             <div class="story-info mb-5">
                                 <h3 class="card-title">{{story.title}}</h3>
-                                <span class="text-story-info font-weight-light">(3200 kata) by <a href="/user/{{story.user.username}}/profile">{{story.user.username}}</a> on {{story.date_posted}}</span>
+                                <span class="text-story-info font-weight-light">({{story.words_count}} kata) by <a href="/user/{{story.user.username}}/profile">{{story.user.username}}</a> on {{story.date_posted}}</span>
                                 <span class="text-story-info tags font-weight-light">Tags: 
                                     {% for tag in  story.tags%}
                                         <a href="/stories?tag={{tag.name}}">{{tag.name}}</a> |
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="story-content">
-                            <p>{{story.content | safe}}</p>
+                            {{story.content | safe}}
                         </div>
                     </div>
                     <div class="comments">

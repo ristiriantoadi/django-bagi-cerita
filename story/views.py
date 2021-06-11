@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from story.models import Story,Comment,Tag
-from bagicerita.helpers import get_points,get_stories,get_story,get_comments,get_all_tags,story_add_tags,pagination
+from bagicerita.helpers import get_points,get_stories,get_story,get_comments,get_all_tags,story_add_tags,pagination,count_words
 from datetime import datetime
 from django.http import Http404
 
@@ -114,16 +114,16 @@ def story_view(request,story_id):
     
     return render(request,"story/story.html",context)
 
-#post story / add story / create story
+#post story / add story / create story / insert story
 def post_story_view(request):
 
     if(request.method == "POST"):
         title = request.POST.get('title')
         content = request.POST.get('content')
+        words_count=count_words(content)
         user = request.user
-        # date_posted = datetime.datetime(datetime.now())
         date_posted = datetime.now()
-        story = Story.objects.create(title=title,content=content,user=user,date_posted=date_posted)
+        story = Story.objects.create(words_count=words_count,title=title,content=content,user=user,date_posted=date_posted)
         story_add_tags(request.POST.getlist('tag[]'), story)
 
         # minus 20 points
@@ -147,6 +147,7 @@ def edit_story_view(request,story_id):
     if(request.method == "POST"):
         story.title = request.POST.get('title')
         story.content = request.POST.get('content')
+        story.words_count=count_words(story.content)
         story.tag_set.clear()
         story.save()
 

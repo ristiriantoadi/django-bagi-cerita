@@ -10,6 +10,7 @@ class Story(models.Model):
     content = RichTextField(blank=True,null=True)
     # content = models.TextField(blank=True,null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,default=None)
+    words_count = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.title} Cerita'
