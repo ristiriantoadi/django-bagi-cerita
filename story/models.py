@@ -1,11 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
+
 
 # Create your models here.
 class Story(models.Model):
     title = models.CharField(max_length=120,blank=True)
     date_posted = models.DateTimeField(null=True, blank=True)
-    content = models.TextField(blank=True,null=True)
+    content = RichTextField(blank=True,null=True)
+    # content = models.TextField(blank=True,null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,default=None)
 
     def __str__(self):
