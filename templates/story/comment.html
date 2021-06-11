@@ -1,43 +1,44 @@
-{% load story_tags %}
-<div class="{% if comment.replied_comment_id != 0 %} ml-5 {% endif %} comment mb-2">
-    <h6 class="user font-weight-bold">{{comment.user.username}}</h6>
-    <span class="date font-weight-light">(26-08-2020)</span>
-    {% if comment.replied_comment_id == 0 %}
-        <span class="rating">
-            {{ comment.rating | render_rating }}
-        </span>
-    {% endif %}
-    <!-- <span class="rating">
-        {{ comment.rating | render_rating }}
-    </span> -->
-    <p class="content">{{comment.content}}</p>
-    <div class="login-to-comment">
-        {% if request.user.is_authenticated %}
-            <!-- this below is the reply button and the reply box -- i will use django if here -->
-            <button onclick="showReplyBox(this)" type="button" data-target="reply-box-{{comment.id}}" class="btn btn-link">Reply</button>
-            <form method="POST" class="reply-box" id="reply-box-{{comment.id}}">
-                {% csrf_token %}
-                <div class="form-group no-gutters">
-                    <textarea required class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div class="container-button-submit">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-                <input type="hidden" name="replied_comment_id" value="{{comment.id}}">                
-            </form>
-        {%else %}
-            <!-- this below is the login to comment button -->
-            <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
+{% load story_tags %} 
+<div style="display:flex">
+    <div {% if comment.user.profile.profile_picture %} style="background-image: url('/media/{{ comment.user.profile.profile_picture }}')" {% endif %} class="profile-img img-comment mr-1"></div>
+    <!-- <div class="{% if comment.replied_comment_id != 0 %} ml-5 {% endif %} comment mb-2"> -->
+    <div class="comment mb-2">
+        <h6 class="user font-weight-bold"><a href="/user/{{comment.user.username}}/profile">{{comment.user.username}}</a></h6>
+        <span class="date font-weight-light">(26-08-2020)</span>
+        {% if comment.replied_comment_id == 0 %}
+            <span class="rating">
+                {{ comment.rating | render_rating }}
+            </span>
         {% endif %}
+        <p class="content">{{comment.content}}</p>
+        <div class="login-to-comment">
+            {% if request.user.is_authenticated %}
+                <!-- this below is the reply button and the reply box -- i will use django if here -->
+                <button onclick="showReplyBox(this)" type="button" data-target="reply-box-{{comment.id}}" class="btn btn-link">Reply</button>
+                <form method="POST" class="reply-box" id="reply-box-{{comment.id}}">
+                    {% csrf_token %}
+                    <div class="form-group no-gutters">
+                        <textarea required class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div class="container-button-submit">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <input type="hidden" name="replied_comment_id" value="{{comment.id}}">                
+                </form>
+            {%else %}
+                <!-- this below is the login to comment button -->
+                <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Login to comment</button>
+            {% endif %}
+        </div>
+        <!-- the replies live here-->
+        {% for reply in comment.replies %}
+            {% comment_tag reply request %}
+        {% endfor %}
+        <script>
+            function showReplyBox(item) {
+                var replyBoxId = item.getAttribute("data-target");
+                document.getElementById(replyBoxId).classList.toggle("visible");
+            }
+        </script>
     </div>
-    <!-- the replies live here-->
-    {% for reply in comment.replies %}
-        {% comment_tag reply request %}
-    {% endfor %}
-    <script>
-        function showReplyBox(item) {
-            var replyBoxId = item.getAttribute("data-target");
-            document.getElementById(replyBoxId).classList.toggle("visible");
-        }
-    </script>
 </div>

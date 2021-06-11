@@ -71,8 +71,8 @@
     width: 70% !important;
 }
 
-.comments{
-    width: 90%;
+.comment{
+    width: 95%;
 }
 
 
@@ -145,6 +145,16 @@
     height: 128px;
     border-radius: 50%;
 }
+
+.profile-img.img-comment{
+    width: 64px;
+    height: 64px;
+}
+
+/* .img-comment{
+    width: 10px;
+    height: 10px;
+} */
 
 .input-tag{
     display: flex;
