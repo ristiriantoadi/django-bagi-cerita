@@ -19,7 +19,7 @@
             </div>
         </div>
 </nav>  
-  <!-- Modal login -->
+  <!-- Modal login modal -->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -30,20 +30,23 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="/login" method="POST">
+            <div id="wrong-password" class="alert alert-danger" style="display: none;" role="alert">
+              Password atau username salah
+            </div>
+            <form id="loginForm" action="/login" method="POST">
               {% csrf_token %}
                 <div class="form-group">
                   <label for="username">Username</label>
-                  <input type="text" name="username" required class="form-control" id="username" placeholder="Username ... ">
+                  <input type="text" name="username" required class="form-control" id="username-login" placeholder="Username ... ">
                 </div>
                 <div class="form-group">
                   <label for="password">Password</label>
-                  <input type="password" name="password" required class="form-control" id="password" placeholder="Password ... ">
+                  <input type="password" name="password" required class="form-control" id="password-login" placeholder="Password ... ">
                 </div>
                 <div class="form-group">
                     <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal" class="btn btn-link">Belum punya akun? Daftar</button>
                 </div>
-                <input type="hidden" name="next" value="{{request.path_info}}">
+                <input type="hidden" id="next-login" name="next" value="{{request.path_info}}">
                 <button type="submit" class="btn btn-primary">Login</button>
               </form>
         </div>
@@ -84,3 +87,72 @@
       </div>
     </div>
   </div>
+  <script>
+
+    var formLogin = document.getElementById("loginForm");
+    formLogin.addEventListener('submit',(e)=>{
+      e.preventDefault()
+      const csrftoken = getCookie('csrftoken');
+      fetch('/login', {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        body: new URLSearchParams({
+            'username': document.getElementById("username-login").value,
+            'password': document.getElementById("password-login").value,
+            'next': document.getElementById("next-login").value
+        })
+      })
+      .then(res=>{
+	      // return res.json()
+        if(res.status == 200){
+          window.location.replace(res.url);
+        }else if(res.status == 401){
+          console.log("wrong pass");
+          document.getElementById("wrong-password").style.display="block"
+        }
+      })
+      // .then(data=>{
+      //   console.log("data",data)
+      // })
+      .catch((error)=>{
+        console.log("error",error)
+      })
+    })
+
+    // function login(){
+    //   fetch('/login', {
+    //     method: 'POST',
+    //     body: new URLSearchParams({
+    //         'username': 'test@gmail.com',
+    //         'password': 'Password!',
+    //     })
+    //   })
+    //   .then(res=>{
+	  //     return res.json()
+    //   })
+    //   .then(data=>{
+    //     console.log("data",data)
+    //   })
+    //   .catch((error)=>{
+    //     console.log("error",error)
+    //   })
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    
+  </script>

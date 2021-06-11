@@ -9,9 +9,11 @@ from bagicerita.helpers import get_stories,get_points,pagination
 # Create your views here.
 def login_view(request,*args, **kwargs):
     if(request.method == "POST"):
+        print("post request received")
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+        print("user: "+str(user))
         if user is not None:
             login(request, user)
             # Redirect
@@ -22,11 +24,15 @@ def login_view(request,*args, **kwargs):
                 return redirect(next_url)
             except Profile.DoesNotExist:
                 return redirect(f"/user/{user.username}/profile/edit")
+        # return HttpResponse("wrong password or username")
         else:
             # Return an 'invalid login' error message.
-            return HttpResponse("<h1>Wrong password or username</h1>")
+            # return HttpResponse("<h1>Wrong password or username</h1>")
+            print("user is none")
+            return HttpResponse(status=401)
 
-        raise Http404("there is no login page--login via popup")
+    # return HttpResponse("wrong pass")
+    raise Http404("there is no login page--login via popup")
 
 def register_view(request,*args, **kwargs):
     if(request.method == "POST"):
