@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseNotFound, Http404, HttpResponse
+from django.http import HttpResponseNotFound, Http404, HttpResponse,HttpResponseBadRequest
 from django.contrib.auth.models import User
 from user.models import Profile
 from story.models import Comment
 from django.contrib.auth import authenticate, login,logout
 from bagicerita.helpers import get_stories,get_points,pagination
+from django.db import IntegrityError
 
 # Create your views here.
 def login_view(request,*args, **kwargs):
@@ -24,21 +25,19 @@ def login_view(request,*args, **kwargs):
                 return redirect(next_url)
             except Profile.DoesNotExist:
                 return redirect(f"/user/{user.username}/profile/edit")
-        # return HttpResponse("wrong password or username")
         else:
-            # Return an 'invalid login' error message.
-            # return HttpResponse("<h1>Wrong password or username</h1>")
-            print("user is none")
             return HttpResponse(status=401)
 
-    # return HttpResponse("wrong pass")
     raise Http404("there is no login page--login via popup")
 
 def register_view(request,*args, **kwargs):
     if(request.method == "POST"):
-        user = User.objects.create_user(username=request.POST.get('username'), 
-        password=request.POST.get('password1'))
-        login(request,user)
+        try:
+            user = User.objects.create_user(username=request.POST.get('username'), 
+            password=request.POST.get('password1'))
+            login(request,user)
+        except IntegrityError:
+            return HttpResponseBadRequest("username not available")
         try:
             profile = user.profile
             return redirect("stories")

@@ -53,7 +53,7 @@
       </div>
     </div>
   </div>
-  <!-- Modal register -->
+  <!-- Modal register modal -->
   <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -64,20 +64,22 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="/register" method="POST">
+            <form id="registerForm" action="/register" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
                   <label for="username">Username</label>
-                  <input type="text" name="username" required class="form-control" id="username" placeholder="Username ... ">
+                  <input type="text" name="username" required class="form-control" id="username-register" placeholder="Username ... ">
+                  <small id="error-username-not-available" style="display: none;" class="text-danger">Username tidak tersedia</small>
                 </div>
                 <div class="form-group">
                   <label for="password1">Password</label>
-                  <input type="password" name="password1" required class="form-control" id="password1" placeholder="Password ... ">
+                  <input type="password" id="password1-register" name="password1" required class="form-control" id="password1-register" placeholder="Password ... ">
                 </div>
                 <div class="form-group">
-                    <label for="password2">Konfirmasi Password</label>
-                    <input type="password" name="password2" required class="form-control" id="password2" placeholder="Konfirmasi Password ... ">
-                  </div>
+                  <label for="password2">Konfirmasi Password</label>
+                  <input id="password2-register" type="password" name="password2" required class="form-control" id="password2-register" placeholder="Konfirmasi Password ... ">
+                  <small id="error-konfirmasi-password" style="display: none;" class="text-danger">Konfirmasi password salah</small>  
+                </div>
                 <div class="form-group">
                     <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-link">Sudah punya akun? Login</button>
                 </div>
@@ -89,9 +91,14 @@
   </div>
   <script>
 
+    //login request
     var formLogin = document.getElementById("loginForm");
     formLogin.addEventListener('submit',(e)=>{
       e.preventDefault()
+
+      //reset all errors
+      document.getElementById("wrong-password").style.display="none"
+
       const csrftoken = getCookie('csrftoken');
       fetch('/login', {
         method: 'POST',
@@ -113,31 +120,54 @@
           document.getElementById("wrong-password").style.display="block"
         }
       })
-      // .then(data=>{
-      //   console.log("data",data)
-      // })
       .catch((error)=>{
         console.log("error",error)
       })
     })
 
-    // function login(){
-    //   fetch('/login', {
-    //     method: 'POST',
-    //     body: new URLSearchParams({
-    //         'username': 'test@gmail.com',
-    //         'password': 'Password!',
-    //     })
-    //   })
-    //   .then(res=>{
-	  //     return res.json()
-    //   })
-    //   .then(data=>{
-    //     console.log("data",data)
-    //   })
-    //   .catch((error)=>{
-    //     console.log("error",error)
-    //   })
+    //register
+    var formRegister = document.getElementById("registerForm");
+    formRegister.addEventListener('submit',(e)=>{
+      e.preventDefault()
+
+      //reset all error
+      document.getElementById("error-konfirmasi-password").style.display="none";
+      document.getElementById("error-username-not-available").style.display="none";
+
+        //check if password1 and password 2 equal
+        var password1 = document.getElementById("password1-register").value
+        var password2 = document.getElementById("password2-register").value
+        if(password1 != password2){
+          console.log("confirm pass salah")
+          document.getElementById("error-konfirmasi-password").style.display="block";
+          return;
+        }
+
+        
+        //send the request
+        const csrftoken = getCookie('csrftoken');
+        fetch('/register', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': csrftoken
+          },
+          body: new URLSearchParams({
+              'username': document.getElementById("username-register").value,
+              'password1': document.getElementById("password1-register").value,
+          })
+        })
+        .then(res=>{
+	        console.log("res",res)
+          if(res.status == 200){
+            window.location.replace(res.url);
+          }else if(res.status == 400){
+            document.getElementById("error-username-not-available").style.display="block";
+          }
+        })
+        .catch((error)=>{
+          console.log("error",error)
+        });
+    })
 
     function getCookie(name) {
       let cookieValue = null;
