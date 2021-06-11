@@ -40,6 +40,11 @@
                             </div>
                         </div>
                     </div>
+                    {%if user == request.user %}
+                        <div class="mb-3">
+                            <a href="/user/{{user.username}}/profile/edit" class="btn btn-primary">Edit Profil</a>
+                        </div>
+                    {% endif %}
                     <h4 class="card-title">Cerita</h4>
                     {% for story in stories %}
                         {% story_box_tag story %}
