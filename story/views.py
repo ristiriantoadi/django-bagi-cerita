@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from story.models import Story,Comment,Tag
+from user.models import Profile
 from bagicerita.helpers import get_points,get_stories,get_story,get_comments,get_all_tags,story_add_tags,pagination,count_words,is_authorized_to_update_story
 from datetime import datetime
 from django.http import Http404
@@ -93,10 +94,13 @@ def story_view(request,story_id):
         obj = Comment.objects.create(rating=rating,content=content,user=user,replied_comment_id=replied_comment_id,story=story)
 
         # add 5 points for original comment
-        if(replied_comment_id == 0):
-            profile = user.profile
-            profile.points+=5
-            profile.save()
+        try:
+            if(replied_comment_id == 0):
+                profile = user.profile
+                profile.points+=5
+                profile.save()
+        except Profile.DoesNotExist:
+            return redirect(f"/user/{user.username}/profile/edit")
 
         return redirect(f"/stories/{story_id}")
 
@@ -117,6 +121,11 @@ def story_view(request,story_id):
 @login_required
 def post_story_view(request):
 
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        return redirect(f"/user/{request.user.username}/profile/edit")
+
     if(request.method == "POST"):
         title = request.POST.get('title')
         content = request.POST.get('content')
@@ -127,10 +136,12 @@ def post_story_view(request):
         story_add_tags(request.POST.getlist('tag[]'), story)
 
         # minus 20 points
-        profile = user.profile
-        profile.points -=20
-        profile.save()
-        
+        try:
+            profile = user.profile
+            profile.points -=20
+            profile.save()
+        except Profile.DoesNotExist:
+            return redirect(f"user/{user.username}/profile/edit")
 
         return redirect(f"/stories/{story.id}")
 
@@ -154,10 +165,7 @@ def edit_story_view(request,story_id):
     except Story.DoesNotExist:
         raise Http404("Story does not exist")
     
-    # # authorization
-    # if(str(story.user) != str(request.user)):
-    #     return redirect("/stories")
-
+ 
     if(request.method == "POST"):
         story.title = request.POST.get('title')
         story.content = request.POST.get('content')
@@ -185,14 +193,7 @@ def delete_story_view(request,story_id):
     # authorization
     if(is_authorized_to_update_story(story_id, request) == False):
         return redirect("/stories")
-    # try:
-    #     story = Story.objects.get(id=story_id)
-    # except Story.DoesNotExist:
-    #     raise Http404("Story does not exist")
-    # if(str(story.user) != str(request.user)):
-    #     return redirect("/stories")
-
-
+ 
     # delete story
     obj =  get_object_or_404(Story,id=story_id)
     obj.delete()
