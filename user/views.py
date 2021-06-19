@@ -6,6 +6,7 @@ from story.models import Comment
 from django.contrib.auth import authenticate, login,logout
 from bagicerita.helpers import get_stories,get_points,pagination
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def login_view(request,*args, **kwargs):
@@ -45,6 +46,7 @@ def register_view(request,*args, **kwargs):
             return redirect(f"user/{user.username}/profile/edit")
     raise Http404("there is no register page--register via popup")
 
+@login_required
 def logout_view(request,*args, **kwargs):
     logout(request)
     next_url = request.GET['next']
@@ -85,6 +87,7 @@ def user_profile_view(request,username):
 
     return render(request,"user/user_profile.html",context)
 
+@login_required
 def edit_user_profile_view(request,username):
     if(request.method == "POST"):
         nama_lengkap = request.POST['nama-lengkap']

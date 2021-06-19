@@ -4,7 +4,7 @@ from story.models import Story,Comment,Tag
 from bagicerita.helpers import get_points,get_stories,get_story,get_comments,get_all_tags,story_add_tags,pagination,count_words
 from datetime import datetime
 from django.http import Http404
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home_view(request,*args, **kwargs):
@@ -13,6 +13,10 @@ def home_view(request,*args, **kwargs):
 # get stories
 # search = {"search_by":"tag","key":"something"} or {"search_by":"judul","key":"something"}
 def stories_view(request):
+
+    if(request.method == "GET"):
+        print("Next: "+str(request.GET.get('next')))
+
     context={
         "page":"stories"
     }
@@ -115,6 +119,7 @@ def story_view(request,story_id):
     return render(request,"story/story.html",context)
 
 #post story / add story / create story / insert story
+@login_required
 def post_story_view(request):
 
     if(request.method == "POST"):
@@ -142,6 +147,7 @@ def post_story_view(request):
     return render(request,"story/posting_story.html",context)
 
 # edit story
+@login_required
 def edit_story_view(request,story_id):
     story = Story.objects.get(id=story_id)
     if(request.method == "POST"):
@@ -165,6 +171,7 @@ def edit_story_view(request,story_id):
     return render(request,"story/posting_story.html",context)
 
 # delete story
+@login_required
 def delete_story_view(request,story_id):
     # delete story
     obj =  get_object_or_404(Story,id=story_id)
@@ -173,6 +180,7 @@ def delete_story_view(request,story_id):
     return redirect("stories")
 
 # add comments
+@login_required
 def add_comment_view(request,story_id):
     
     # add comment
