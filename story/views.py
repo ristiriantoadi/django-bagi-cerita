@@ -91,8 +91,7 @@ def story_view(request,story_id):
         replied_comment_id = 0
         if(request.POST.get('replied_comment_id')):
             replied_comment_id = int(request.POST.get('replied_comment_id'))
-        obj = Comment.objects.create(rating=rating,content=content,user=user,replied_comment_id=replied_comment_id,story=story)
-
+        
         # add 5 points for original comment
         try:
             if(replied_comment_id == 0):
@@ -101,6 +100,7 @@ def story_view(request,story_id):
                 profile.save()
         except Profile.DoesNotExist:
             return redirect(f"/user/{user.username}/profile/edit")
+        obj = Comment.objects.create(rating=rating,content=content,user=user,replied_comment_id=replied_comment_id,story=story)
 
         return redirect(f"/stories/{story_id}")
 
