@@ -13,11 +13,6 @@ def get_stories(user=None,category="all",search=None):
     else:
         stories = Story.objects.all()
         
-        # filter stories by judul
-        # if(search):
-        #     if(search["search_by"] == "judul"):
-        #         stories = Story.objects.filter(title=search["key"])
-        #         print("stories by judul: "+str(stories))
     returned_stories=[]
     for story in stories:
         story = get_story(story)
@@ -113,6 +108,14 @@ def pagination(stories,request):
     if(request.GET.get("page")):
         page = request.GET.get("page")
     stories = paginator.get_page(page)
-    # print("length: "+str(len(stories)))
     stories.len = len(stories)
     return stories
+
+def is_authorized_to_update_story(story_id,request):
+    try:
+        story = Story.objects.get(id=story_id)
+    except Story.DoesNotExist:
+        raise Http404("Story does not exist")
+    if(str(story.user) != str(request.user)):
+        return False
+    return True

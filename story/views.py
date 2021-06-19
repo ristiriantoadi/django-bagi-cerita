@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from story.models import Story,Comment,Tag
-from bagicerita.helpers import get_points,get_stories,get_story,get_comments,get_all_tags,story_add_tags,pagination,count_words
+from bagicerita.helpers import get_points,get_stories,get_story,get_comments,get_all_tags,story_add_tags,pagination,count_words,is_authorized_to_update_story
 from datetime import datetime
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
@@ -145,14 +145,18 @@ def post_story_view(request):
 @login_required
 def edit_story_view(request,story_id):
 
+    # authorization
+    if(is_authorized_to_update_story(story_id, request) == False):
+        return redirect("/stories")
+    
     try:
         story = Story.objects.get(id=story_id)
     except Story.DoesNotExist:
         raise Http404("Story does not exist")
     
-    # authorization
-    if(str(story.user) != str(request.user)):
-        return redirect("/stories")
+    # # authorization
+    # if(str(story.user) != str(request.user)):
+    #     return redirect("/stories")
 
     if(request.method == "POST"):
         story.title = request.POST.get('title')
@@ -179,12 +183,15 @@ def edit_story_view(request,story_id):
 def delete_story_view(request,story_id):
 
     # authorization
-    try:
-        story = Story.objects.get(id=story_id)
-    except Story.DoesNotExist:
-        raise Http404("Story does not exist")
-    if(str(story.user) != str(request.user)):
+    if(is_authorized_to_update_story(story_id, request) == False):
         return redirect("/stories")
+    # try:
+    #     story = Story.objects.get(id=story_id)
+    # except Story.DoesNotExist:
+    #     raise Http404("Story does not exist")
+    # if(str(story.user) != str(request.user)):
+    #     return redirect("/stories")
+
 
     # delete story
     obj =  get_object_or_404(Story,id=story_id)
