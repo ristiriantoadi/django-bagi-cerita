@@ -49,7 +49,6 @@ def popular_stories_view(request):
         "page":"popular",
         "stories": stories
     }
-    print("stories: "+str(context["stories"]))
     return render(request,"story/stories.html",context)
 
 # get best stories
@@ -109,7 +108,6 @@ def story_view(request,story_id):
         "have_commented":"False"
     }
     for comment in context['comments']:
-        print("comment: "+str(comment))
         if(comment.user.id == request.user.id):
             context['have_commented']="True"
     
@@ -143,10 +141,16 @@ def post_story_view(request):
     }
     return render(request,"story/posting_story.html",context)
 
-# edit story
+# edit story / edit cerita
 @login_required
 def edit_story_view(request,story_id):
+
     story = Story.objects.get(id=story_id)
+    
+    # authorization
+    if(str(story.user) != str(request.user)):
+        return redirect("/stories")
+
     if(request.method == "POST"):
         story.title = request.POST.get('title')
         story.content = request.POST.get('content')

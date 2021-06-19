@@ -11,11 +11,10 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def login_view(request,*args, **kwargs):
     if(request.method == "POST"):
-        print("post request received")
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        print("user: "+str(user))
+        
         if user is not None:
             login(request, user)
             # Redirect
@@ -92,13 +91,8 @@ def user_profile_view(request,username):
 def edit_user_profile_view(request,username):
 
     # check authorization
-    print("request user: "+str(request.user))
-    print("username: "+str(username))
     if(str(request.user) != str(username)):
-        print("yes")
         return redirect("/stories")
-    else:
-        print("no")
 
     if(request.method == "POST"):
         nama_lengkap = request.POST['nama-lengkap']
