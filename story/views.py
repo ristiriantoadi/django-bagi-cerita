@@ -145,7 +145,10 @@ def post_story_view(request):
 @login_required
 def edit_story_view(request,story_id):
 
-    story = Story.objects.get(id=story_id)
+    try:
+        story = Story.objects.get(id=story_id)
+    except Story.DoesNotExist:
+        raise Http404("Story does not exist")
     
     # authorization
     if(str(story.user) != str(request.user)):
@@ -174,6 +177,15 @@ def edit_story_view(request,story_id):
 # delete story
 @login_required
 def delete_story_view(request,story_id):
+
+    # authorization
+    try:
+        story = Story.objects.get(id=story_id)
+    except Story.DoesNotExist:
+        raise Http404("Story does not exist")
+    if(str(story.user) != str(request.user)):
+        return redirect("/stories")
+
     # delete story
     obj =  get_object_or_404(Story,id=story_id)
     obj.delete()
