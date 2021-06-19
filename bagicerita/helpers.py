@@ -50,7 +50,6 @@ def get_story(story):
     # get the tags and the rating
     story.tags = story.tag_set.all()
     story.date_posted = story.date_posted.strftime("%B %d %Y")
-    print("date posted: "+str(story.date_posted))
     story = calculate_story_rating(story)
     return story
 

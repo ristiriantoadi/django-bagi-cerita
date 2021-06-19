@@ -87,8 +87,19 @@ def user_profile_view(request,username):
 
     return render(request,"user/user_profile.html",context)
 
+# edit profile / edit profil / edit user profile
 @login_required
 def edit_user_profile_view(request,username):
+
+    # check authorization
+    print("request user: "+str(request.user))
+    print("username: "+str(username))
+    if(str(request.user) != str(username)):
+        print("yes")
+        return redirect("/stories")
+    else:
+        print("no")
+
     if(request.method == "POST"):
         nama_lengkap = request.POST['nama-lengkap']
         tanggal_lahir = request.POST['tanggal-lahir']
@@ -136,7 +147,6 @@ def edit_user_profile_view(request,username):
     except Profile.DoesNotExist:
         pass
 
-    print("context: "+str(context))
     return render(request,"user/edit_user_profile.html",context)
 
 def notifikasi_view(request,username):

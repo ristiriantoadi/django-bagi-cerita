@@ -14,9 +14,6 @@ def home_view(request,*args, **kwargs):
 # search = {"search_by":"tag","key":"something"} or {"search_by":"judul","key":"something"}
 def stories_view(request):
 
-    if(request.method == "GET"):
-        print("Next: "+str(request.GET.get('next')))
-
     context={
         "page":"stories"
     }
