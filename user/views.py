@@ -54,6 +54,10 @@ def logout_view(request,*args, **kwargs):
 # get user profile / get profile / profile page
 def user_profile_view(request,username):
     user = User.objects.filter(username=username).first()
+    
+    # get unread comments / unread notifications
+    notif_length = len(get_comments_notification(request.user, 'unread'))
+    
     context = {
         "img":"profile_picture/man.svg",
         "nama_lengkap":"-",
@@ -64,7 +68,9 @@ def user_profile_view(request,username):
         "page":"profil",
         # "username":username,
         "user":user,
-        "poin":0
+        "poin":0,
+        # "notif_length":notif_length
+        "notif_length":notif_length
     }
     try:
         profile = user.profile
@@ -147,12 +153,19 @@ def edit_user_profile_view(request,username):
 
 @login_required
 def notifikasi_view(request):
+    # get unread comments / unread notifications
+    # notif_length = len(get_comments_notification(request.user, 'unread'))
+    
+    # get all notifications
+    comments = get_comments_notification(request.user, 'all')
+
     context = {
         "page":"notifikasi",
-        "username":request.user.username
+        "username":request.user.username,
+        "notif_length":0,
+        "comments":comments
+        # "notif_length":4
     }
-
-    get_comments_notification(request.user, 'unread')
 
     return render(request,"user/notifikasi.html",context)
 

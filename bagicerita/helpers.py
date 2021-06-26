@@ -49,6 +49,8 @@ def get_story(story):
     story = calculate_story_rating(story)
     return story
 
+# get notifications
+# status is either 'unread' or 'all'
 def get_comments_notification(user,status):
     if(status == "unread"):
 	    comments = Comment.objects.filter(read_status=False,replied_comment_id=0)
@@ -59,7 +61,12 @@ def get_comments_notification(user,status):
     for comment in comments:
         if(comment.story.user == user):
             comments_notif.append(comment)
-			
+            if(status != "unread"):
+                comment.read_status = True
+                comment.save()
+
+    print("comments: "+str(comments_notif))
+
     return comments_notif
 
 

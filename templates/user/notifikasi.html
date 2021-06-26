@@ -9,12 +9,15 @@
                 <div class="card-body">
                     <h3 class="card-title">Notifikasi</h3>
                     <ul>
-                        <li class="mb-4"><a href="#">Aldo</a> berkomentar di "<a href="#">Ada Apa dengan Nona</a>"</li>
+                        {% for comment in comments %}
+                            <li class="mb-2"><a href="/user/{{comment.user.username}}/profile">{{comment.user.username}}</a> berkomentar di "<a href="/stories/{{comment.story.id}}">{{comment.story.title}}</a>"</li>
+                        {% endfor %}
+                        <!-- <li class="mb-4"><a href="#">Aldo</a> berkomentar di "<a href="#">Ada Apa dengan Nona</a>"</li>
                         <li class="mb-4"><a href="#">Jihan</a> berkomentar di "<a href="#">Bukan Aku Pelakunya</a>"</li>
                         <li class="mb-4"><a href="#">Ilsa</a> berkomentar di "<a href="#">Seratus Tahun Keributan</a>"</li>
                         <li class="mb-4"><a href="#">Tegar</a> berkomentar di "<a href="#">Pembunuhan Roger Ackroyd</a>"</li>
                         <li class="mb-4"><a href="#">Ila</a> berkomentar di "<a href="#">Matinya Seorang Komunis</a>"</li>
-                        <li class="mb-4"><a href="#">Ela</a> berkomentar di "<a href="#">Ayahku Seorang Kapiten</a>"</li>
+                        <li class="mb-4"><a href="#">Ela</a> berkomentar di "<a href="#">Ayahku Seorang Kapiten</a>"</li> -->
                     </ul>
                 </div>
             </div>
