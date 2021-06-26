@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from user.models import Profile
 from story.models import Comment
 from django.contrib.auth import authenticate, login,logout
-from bagicerita.helpers import get_stories,get_points,pagination
+from bagicerita.helpers import get_stories,get_points,pagination,get_comments_notification
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 
@@ -143,11 +143,17 @@ def edit_user_profile_view(request,username):
 
     return render(request,"user/edit_user_profile.html",context)
 
-def notifikasi_view(request,username):
+# get notifications / get notifikasi
+
+@login_required
+def notifikasi_view(request):
     context = {
         "page":"notifikasi",
-        "username":username
+        "username":request.user.username
     }
+
+    get_comments_notification(request.user, 'unread')
+
     return render(request,"user/notifikasi.html",context)
 
 # get rating / get points

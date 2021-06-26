@@ -1,5 +1,6 @@
 from story.models import Story,Comment,Tag
 from django.core.paginator import Paginator
+from django.http import Http404
 
 def get_points(user):
     return len(Comment.objects.filter(user=user,replied_comment_id=0))*5
@@ -47,6 +48,20 @@ def get_story(story):
     story.date_posted = story.date_posted.strftime("%B %d %Y")
     story = calculate_story_rating(story)
     return story
+
+def get_comments_notification(user,status):
+    if(status == "unread"):
+	    comments = Comment.objects.filter(read_status=False,replied_comment_id=0)
+    else:
+	    comments = Comment.objects.filter(replied_comment_id=0)
+
+    comments_notif = []
+    for comment in comments:
+        if(comment.story.user == user):
+            comments_notif.append(comment)
+			
+    return comments_notif
+
 
 def get_comments(story_id):
     story_comments = Story.objects.get(id=story_id).comment_set.filter(replied_comment_id=0)

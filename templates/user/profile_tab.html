@@ -5,9 +5,11 @@
                 <li class="nav-item">
                     <a class="nav-link {% if page == 'profil' %} active {% endif %}" aria-current="true" href="/user/{{username}}/profile">Profil</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if page == 'notifikasi' %} active {% endif %}" href="/user/{{username}}/notifikasi">Notifikasi</a>
-                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if page == 'notifikasi' %} active {% endif %}" href="/user/notifikasi">Notifikasi</a>
+                    </li>
+                {% endif %}
             </ul>
        </div> 
     </div>
