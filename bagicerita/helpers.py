@@ -65,8 +65,6 @@ def get_comments_notification(user,status):
                 comment.read_status = True
                 comment.save()
 
-    print("comments: "+str(comments_notif))
-
     return comments_notif
 
 

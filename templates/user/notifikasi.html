@@ -10,9 +10,12 @@
                     <h3 class="card-title">Notifikasi</h3>
                     <ul>
                         {% for comment in comments %}
+                            {% if comment.new_date %}
+                                <h6 style="color:#a9a9a9;font-weight: bold;">{{comment.date_posted|date:'Y-m-d'}}</h6>
+                            {% endif %}
                             <li class="mb-2"><a href="/user/{{comment.user.username}}/profile">{{comment.user.username}}</a> berkomentar di "<a href="/stories/{{comment.story.id}}">{{comment.story.title}}</a>"</li>
                         {% endfor %}
-                        {% if comments.len != 0 %}
+                        {% if len != 0 %}
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination pagination-sm">
                                     {% for num in comments.paginator.page_range %}

@@ -8,6 +8,7 @@ from bagicerita.helpers import get_stories,get_points,pagination,get_comments_no
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from datetime import datetime
 
 # Create your views here.
 def login_view(request,*args, **kwargs):
@@ -161,12 +162,19 @@ def notifikasi_view(request):
     if(request.GET.get("page")):
         page = request.GET.get("page")
     comments = paginator.get_page(page)
+    last_date="0"
+    for comment in comments:
+        comment_date = str(datetime.date(comment.date_posted))
+        if(last_date != comment_date):
+            last_date = comment_date
+            comment.new_date = True
+        # print("comment date: "+str(datetime.date(comment.date_posted)))
 
     context = {
         "page":"notifikasi",
         "username":request.user.username,
-        "notif_length":0,
-        "comments":comments
+        "comments":comments,
+        "len":len(comments)
         # "notif_length":4
     }
 
