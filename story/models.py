@@ -35,6 +35,9 @@ class Comment(models.Model):
     read_status = models.BooleanField(default=False)
     date_posted = models.DateTimeField(null=True, blank=True)
 
+    class Meta:
+        ordering = ["-date_posted"]
+
     # a comment is either an original comment or a reply
     # an original comment have story data, and replied_comment_id = 0
     # a reply have NO story data, and replied_comment_id != 0

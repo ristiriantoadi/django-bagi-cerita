@@ -81,7 +81,7 @@ def story_view(request,story_id):
 
     story = Story.objects.get(id=story_id)
 
-    # add comment or reply
+    # add comment or reply / add comments / add replies 
     if(request.method == "POST"):
         rating=0
         if(request.POST.get("rating")):
@@ -100,7 +100,9 @@ def story_view(request,story_id):
                 profile.save()
         except Profile.DoesNotExist:
             return redirect(f"/user/{user.username}/profile/edit")
-        obj = Comment.objects.create(rating=rating,content=content,user=user,replied_comment_id=replied_comment_id,story=story)
+        
+        date_posted = datetime.now()
+        obj = Comment.objects.create(rating=rating,content=content,user=user,replied_comment_id=replied_comment_id,story=story,date_posted=date_posted)
 
         return redirect(f"/stories/{story_id}")
 

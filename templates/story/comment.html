@@ -4,7 +4,7 @@
     <!-- <div class="{% if comment.replied_comment_id != 0 %} ml-5 {% endif %} comment mb-2"> -->
     <div class="comment mb-2">
         <h6 class="user font-weight-bold"><a href="/user/{{comment.user.username}}/profile">{{comment.user.username}}</a></h6>
-        <span class="date font-weight-light">(26-08-2020)</span>
+        <span class="date font-weight-light">({{comment.date_posted |date:'Y-m-d'}})</span>
         {% if comment.replied_comment_id == 0 %}
             <span class="rating">
                 {{ comment.rating | render_rating }}
