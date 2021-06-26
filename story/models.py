@@ -32,6 +32,8 @@ class Comment(models.Model):
     story = models.ForeignKey(Story, on_delete=models.CASCADE,default=None)
     replied_comment_id = models.IntegerField(default=0)
     rating = models.IntegerField(default=1)
+    read_status = models.BooleanField(default=False)
+    date_posted = models.DateTimeField(null=True, blank=True)
 
     # a comment is either an original comment or a reply
     # an original comment have story data, and replied_comment_id = 0
