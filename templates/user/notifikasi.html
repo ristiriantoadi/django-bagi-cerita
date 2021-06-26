@@ -12,6 +12,15 @@
                         {% for comment in comments %}
                             <li class="mb-2"><a href="/user/{{comment.user.username}}/profile">{{comment.user.username}}</a> berkomentar di "<a href="/stories/{{comment.story.id}}">{{comment.story.title}}</a>"</li>
                         {% endfor %}
+                        {% if comments.len != 0 %}
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination pagination-sm">
+                                    {% for num in comments.paginator.page_range %}
+                                        <li class="page-item {% if comments.number == num %} active {% endif %}"><a class="page-link" href="/user/notifikasi?page={{num}}">{{num}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </nav>
+                        {% endif %}
                         <!-- <li class="mb-4"><a href="#">Aldo</a> berkomentar di "<a href="#">Ada Apa dengan Nona</a>"</li>
                         <li class="mb-4"><a href="#">Jihan</a> berkomentar di "<a href="#">Bukan Aku Pelakunya</a>"</li>
                         <li class="mb-4"><a href="#">Ilsa</a> berkomentar di "<a href="#">Seratus Tahun Keributan</a>"</li>

@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login,logout
 from bagicerita.helpers import get_stories,get_points,pagination,get_comments_notification
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 # Create your views here.
 def login_view(request,*args, **kwargs):
@@ -152,12 +153,14 @@ def edit_user_profile_view(request,username):
 # get notifications / get notifikasi
 
 @login_required
-def notifikasi_view(request):
-    # get unread comments / unread notifications
-    # notif_length = len(get_comments_notification(request.user, 'unread'))
-    
+def notifikasi_view(request):   
     # get all notifications
     comments = get_comments_notification(request.user, 'all')
+    paginator = Paginator(comments, 5)
+    page=1
+    if(request.GET.get("page")):
+        page = request.GET.get("page")
+    comments = paginator.get_page(page)
 
     context = {
         "page":"notifikasi",
