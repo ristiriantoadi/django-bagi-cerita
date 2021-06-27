@@ -42,7 +42,7 @@ DEBUG = True
 #         filemode = 'a'
 #     )
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bagicerita.herokuapp.com']
 
 
 # Application definition
