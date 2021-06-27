@@ -140,7 +140,7 @@
     background-position: center;
     /* Make the background image cover the area of the <div>, and clip the excess */
     background-size: cover;  
-    background-image: url('http://localhost:8000/static/user/man.svg');
+    background-image: url('/media/profile_picture/man.svg');
     width: 128px;
     height: 128px;
     border-radius: 50%;
