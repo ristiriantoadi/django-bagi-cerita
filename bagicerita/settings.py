@@ -108,7 +108,10 @@ WSGI_APPLICATION = 'bagicerita.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.environ.get(
+            'DJANGO_DB_PATH',
+            BASE_DIR / 'db.sqlite3',
+        )
     }
 }
 
@@ -163,7 +166,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # uploaded files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join('/data/media')
 
 # login required
 LOGIN_URL="/stories"
