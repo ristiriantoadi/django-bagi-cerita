@@ -13,37 +13,45 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os,logging
 # import django_heroku
-import dj_database_url 
+import dj_database_url
+from dotenv import load_dotenv 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '==8xtqgs&wxx@@nwhba-k+ig@-fc%%72!+fh7zed2uzpgz^78i'
+# SECRET_KEY = '==8xtqgs&wxx@@nwhba-k+ig@-fc%%72!+fh7zed2uzpgz^78i'
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-local-development-only-key'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# if DEBUG:
-#     # will output to your console
-#     logging.basicConfig(
-#         level = logging.DEBUG,
-#         format = '%(asctime)s %(levelname)s %(message)s',
-#     )
-# else:
-#     # will output to logging file
-#     logging.basicConfig(
-#         level = logging.DEBUG,
-#         format = '%(asctime)s %(levelname)s %(message)s',
-#         filename = '/my_log_file.log',
-#         filemode = 'a'
-#     )
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+if DEBUG:
+    # will output to your console
+    logging.basicConfig(
+        level = logging.DEBUG,
+        format = '%(asctime)s %(levelname)s %(message)s',
+    )
+else:
+    # will output to logging file
+    logging.basicConfig(
+        level = logging.DEBUG,
+        format = '%(asctime)s %(levelname)s %(message)s',
+        filename = '/my_log_file.log',
+        filemode = 'a'
+    )
 
-# ALLOWED_HOSTS = ['bagicerita.herokuapp.com',]
-ALLOWED_HOSTS = ['127.0.0.1','localhost']
+ALLOWED_HOSTS = os.environ.get(
+    'DJANGO_ALLOWED_HOSTS',
+    '127.0.0.1,localhost'
+).split(',')
 
 # Application definition
 
